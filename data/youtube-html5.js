@@ -7,6 +7,18 @@ function getUrlParams() {
     return params;
 }
 
+function resizePlayerWindow(player, resolution) {
+    if(resolution == 0 || !player) return;
+    
+    // Sidebar has negative top margin by default
+    var sidebar = document.getElementById("watch7-sidebar");
+    if(sidebar)
+        sidebar.style.marginTop = "25px";
+    
+    player.style.width = (resolution * 16 / 9) + "px";
+    player.style.height = (resolution + 30) + "px";
+}
+
 // create the button
 var youtubeHtml5Button = document.createElement("button");
 // assign properties
@@ -33,13 +45,18 @@ youtubeHtml5Button.onclick = function() {
     var url = getUrlParams();
     if(url && url.v) {
         var player = document.createElement("iframe");
-        player.src = "https://www.youtube.com/embed/" + url.v + "?rel=0&autoplay=1";
+        player.src = "https://www.youtube.com/embed/" + url.v + "?rel=0";
+        if(self.options.options["autoplay"])
+            player.src += "&autoplay=1";
         player.width = "100%";
         player.height = "100%";
         player.setAttribute('allowfullscreen', '');
         
         var insertInto = document.getElementById("player-api");
         if(insertInto) {
+            if(self.options.options["resolution"])
+                resizePlayerWindow(insertInto, self.options.options["resolution"]);
+
             insertInto.innerHTML = "";
             insertInto.appendChild(player);
         }
