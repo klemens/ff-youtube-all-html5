@@ -4,6 +4,8 @@
   "id": "jid1-qj0w91o64N7Eeg",
   "description": "Play (almost) all videos on youtube without flash.",
   "author": "Klemens Schölhorn",
+  "icon": "logo/logo32.png",
+  "icon64": "logo/logo64.png",
   "license": "GPLv3",
   "version": "0.1",
   "preferences": [{

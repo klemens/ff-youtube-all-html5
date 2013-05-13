@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- HTML5 Logo by W3C under CC-BY: http://www.w3.org/html/logo/ -->
+<!-- Edited by Klemens Schölhorn -->
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <title>YouTube ALL HTML5 Logo</title>
+  <path
+     d="M 71,460 30,0 481,0 440,460 255,512"
+     style="fill:#e34f26" />
+  <path
+     d="M 256,472 405,431 440,37 256,37"
+     style="fill:#ef652a" />
+  <path
+     d="m 144.28125,90.125 0,281.3125 L 256,310.90625 256,150.65625 144.28125,90.125 z"
+     style="fill:#ebebeb" />
+  <path
+     d="M 255,150.125 255,311.4375 403.84375,230.78125 255,150.125 z"
+     style="fill:#ffffff" />
+</svg>
