@@ -17,7 +17,7 @@
   }, {
       "name": "resolution",
       "title": "Resolution",
-      "description": "Change resolution of the inserted video\n(\"Default\" keeps the youtube default)",
+      "description": "Change resolution of the inserted video.\n(\"Default\" keeps the youtube default)",
       "type": "menulist",
       "value": 0,
       "options" : [{
@@ -32,6 +32,19 @@
       }, {
           "label": "1080p",
           "value": "1080"
+      }]
+  }, {
+      "name": "loadtype",
+      "title": "Load video using",
+      "description": "Specify the method used to display the video as HTML5 video.",
+      "type": "radio",
+      "value": "api",
+      "options": [{
+          "value": "api",
+          "label": "Player API (faster, but depending on your configuration maybe less reliable)"
+      }, {
+          "value": "iframe",
+          "label": "Embedded player (use this if API does not work)"
       }]
   }]
 }

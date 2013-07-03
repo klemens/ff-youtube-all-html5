@@ -63,7 +63,10 @@ function youtubeHtml5ButtonLoader(startOptions) {
             if(insertInto) {
                 resizePlayer(insertInto, options.settings["resolution"]);
 
-                insertVideoIframe(url.v, insertInto);
+                if(options.settings["loadtype"] == "api")
+                    insertVideoApi(url.v);
+                else if(options.settings["loadtype"] == "iframe")
+                    insertVideoIframe(url.v, insertInto);
             }
         }
 
@@ -81,6 +84,14 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
         player.style.width = (resolution * 16 / 9) + "px";
         player.style.height = (resolution + 30) + "px"; // 30px for nav
+    }
+
+    function insertVideoApi(video) {
+        var player = window.document.getElementById('movie_player');
+
+        if(player && player.wrappedJSObject && player.wrappedJSObject.loadVideoById) {
+            player.wrappedJSObject.loadVideoById(video);
+        }
     }
 
     function insertVideoIframe(video, insertInto) {
