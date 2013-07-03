@@ -9,9 +9,9 @@
   "license": "GPLv3",
   "version": "0.1",
   "preferences": [{
-      "name": "autoplay",
-      "title": "Autoplay",
-      "description": "Automatically play the video after clicking the button",
+      "name": "autostart",
+      "title": "Autostart",
+      "description": "Try to autostart videos upon loading of the site.\n(You can still use the button, if this fails)",
       "type": "bool",
       "value": true
   }, {

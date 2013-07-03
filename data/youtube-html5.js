@@ -1,6 +1,8 @@
 function youtubeHtml5ButtonLoader(startOptions) {
     var options = startOptions;
     var button = null;
+    var observer = null;
+    var that = this;
 
     this.installButton = function() {
         // create the button
@@ -26,6 +28,30 @@ function youtubeHtml5ButtonLoader(startOptions) {
         var insertInto = document.getElementById("yt-masthead-content");
         if(insertInto) {
             insertInto.insertBefore(button, insertInto.firstChild);
+        }
+    }
+
+    this.registerObserver = function() {
+        if(observer != null) return;
+
+        observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                for(var i = 0; i < mutation.addedNodes.length; ++i) {
+                    if(mutation.addedNodes[i] instanceof HTMLAnchorElement &&
+                       mutation.addedNodes[i].href.contains("get.adobe.com/flashplayer")) {
+                        that.onButtonClick();
+                        observer.disconnect();
+                        return;
+                    }
+                }
+            });
+        });
+
+        var insertInto = document.getElementById("player-api");
+        if(insertInto) {
+            observer.observe(insertInto, { childList: true, subtree: true });
+        } else {
+            observer = null;
         }
     }
 
@@ -82,4 +108,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
 }
 
 var youtubeHtml5Button = new youtubeHtml5ButtonLoader(self.options);
+
 youtubeHtml5Button.installButton();
+if(self.options.settings["autostart"])
+    youtubeHtml5Button.registerObserver();
