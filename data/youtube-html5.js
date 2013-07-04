@@ -109,6 +109,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
             }
 
             started = true;
+            html5Button.classList.add("yt-uix-button-toggled");
         }
 
         html5Button.blur();
