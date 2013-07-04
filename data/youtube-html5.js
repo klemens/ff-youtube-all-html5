@@ -22,7 +22,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
         // create the html5 button
         html5Button = document.createElement("button");
         html5Button.className = "yt-uix-button start yt-uix-button-default";
-        html5Button.innerHTML = "HTML5";
+        html5Button.textContent = "HTML5";
         html5Button.title = "Play video using HTML5";
         html5Button.style.paddingLeft = "30px";
         html5Button.style.backgroundImage = "url(" + options.buttonImageUrl + ")";
@@ -55,7 +55,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
             var span = document.createElement("span");
             span.className = "yt-uix-button-menu-item";
-            span.innerHTML = "Resize to " + sizes[i] + "p";
+            span.textContent = "Resize to " + sizes[i] + "p";
             span.dataset.videosize = sizes[i];
             span.addEventListener("click", function(event) {
                 if(started) {
@@ -155,6 +155,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
         player.setAttribute('allowfullscreen', '');
 
         if(insertInto) {
+            // Remove all childern before inferting iframe
             insertInto.innerHTML = "";
             insertInto.appendChild(player);
         }
