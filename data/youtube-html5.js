@@ -1,34 +1,74 @@
 function youtubeHtml5ButtonLoader(startOptions) {
     var options = startOptions;
-    var button = null;
+    var html5Button = null;
     var observer = null;
+    var started = false;
+
     var that = this;
 
     this.installButton = function() {
-        // create the button
-        button = document.createElement("button");
+        var insertInto = document.getElementById("yt-masthead-content");
+        if(!insertInto) {
+            return;
+        }
 
-        // assign properties
-        button.id = "youtube-html5-button";
-        button.className = "yt-uix-button yt-uix-button-default";
-        button.innerHTML = "HTML5";
-        button.title = "Play video using HTML5";
-        button.style.marginLeft = "25px";
-        button.style.marginTop = "3px";
-        button.style.paddingLeft = "30px";
-        button.style.cssFloat = "right";
-        button.style.backgroundImage = "url(" + options.buttonImageUrl + ")";
-        button.style.backgroundRepeat = "no-repeat";
-        button.style.backgroundPosition = "5px 50%";
+        // create outer span
+        var buttonGroup = document.createElement("span");
+        buttonGroup.className = "yt-uix-button-group";
+        buttonGroup.style.marginLeft = "25px";
+        buttonGroup.style.marginTop = "3px";
+        buttonGroup.style.cssFloat = "right";
 
-        // assign onclick listener
-        button.onclick = this.onButtonClick;
+        // create the html5 button
+        html5Button = document.createElement("button");
+        html5Button.className = "yt-uix-button start yt-uix-button-default";
+        html5Button.innerHTML = "HTML5";
+        html5Button.title = "Play video using HTML5";
+        html5Button.style.paddingLeft = "30px";
+        html5Button.style.backgroundImage = "url(" + options.buttonImageUrl + ")";
+        html5Button.style.backgroundRepeat = "no-repeat";
+        html5Button.style.backgroundPosition = "5px 50%";
+        html5Button.addEventListener("click", function() {
+            that.startAndResize(options.settings["resolution"]);
+        });
+        buttonGroup.appendChild(html5Button);
+
+        // create sizes menu
+        var sizeMenu = document.createElement("button");
+        sizeMenu.className = "end flip yt-uix-button yt-uix-button-default yt-uix-button-empty"
+        buttonGroup.appendChild(sizeMenu);
+
+        var arrowImage = document.createElement("img");
+        arrowImage.className = "yt-uix-button-arrow";
+        arrowImage.src = "//s.ytimg.com/yts/img/pixel-vfl3z5WfW.gif";
+        sizeMenu.appendChild(arrowImage);
+
+        var sizeList = document.createElement("ol");
+        sizeList.className = "yt-uix-button-menu hid";
+        sizeMenu.appendChild(sizeList);
+
+        // Insert values into the list
+        var sizes = [480, 720, 1080]
+        for(var i in sizes) {
+            var li = document.createElement("li");
+            sizeList.appendChild(li);
+
+            var span = document.createElement("span");
+            span.className = "yt-uix-button-menu-item";
+            span.innerHTML = "Resize to " + sizes[i] + "p";
+            span.dataset.videosize = sizes[i];
+            span.addEventListener("click", function(event) {
+                if(started) {
+                    resizePlayer(parseInt(event.target.dataset.videosize));
+                } else {
+                    that.startAndResize(event.target.dataset.videosize);
+                }
+            });
+            li.appendChild(span);
+        }
 
         // insert into dom
-        var insertInto = document.getElementById("yt-masthead-content");
-        if(insertInto) {
-            insertInto.insertBefore(button, insertInto.firstChild);
-        }
+        insertInto.insertBefore(buttonGroup, insertInto.firstChild);
     }
 
     this.registerObserver = function() {
@@ -71,7 +111,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
             started = true;
         }
 
-        button.blur();
+        html5Button.blur();
     }
 
 
