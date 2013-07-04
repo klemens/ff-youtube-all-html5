@@ -155,8 +155,10 @@ function youtubeHtml5ButtonLoader(startOptions) {
         player.setAttribute('allowfullscreen', '');
 
         if(insertInto) {
-            // Remove all childern before inferting iframe
-            insertInto.innerHTML = "";
+            // Remove all childern before inserting iframe
+            while(insertInto.hasChildNodes()) {
+                insertInto.removeChild(insertInto.firstChild);
+            }
             insertInto.appendChild(player);
         }
     }
