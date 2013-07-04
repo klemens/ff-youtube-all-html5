@@ -98,7 +98,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
     this.startAndResize = function(size) {
         var url = getUrlParams();
 
-        if(url && url.v) {
+        if(url && url.v && !started) {
             resizePlayer(size);
 
             if(options.settings["loadtype"] == "api") {
