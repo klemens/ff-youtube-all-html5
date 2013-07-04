@@ -128,8 +128,13 @@ function youtubeHtml5ButtonLoader(startOptions) {
             sidebar.style.marginTop = "25px";
         }
 
-        player.style.width = (resolution * 16 / 9) + "px";
-        player.style.height = (resolution + 30) + "px"; // 30px for nav
+        var topbar = document.getElementById("yt-masthead-content");
+        if(topbar) {
+            topbar.style.maxWidth = (height * 16 / 9) + "px";
+        }
+
+        player.style.width = (height * 16 / 9) + "px";
+        player.style.height = (height + 30) + "px"; // 30px for nav
     }
 
     function insertVideoApi(video) {
