@@ -20,7 +20,7 @@
       "title": "Resolution",
       "description": "Change resolution of the video.",
       "type": "menulist",
-      "value": "0",
+      "value": 0,
       "options" : [{
           "label": "Keep",
           "value": "0"
