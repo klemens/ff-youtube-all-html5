@@ -8,7 +8,7 @@
   "icon64": "logo/logo64.png",
   "permissions": { "private-browsing": true },
   "license": "GPLv3",
-  "version": "0.1",
+  "version": "1.0",
   "preferences": [{
       "name": "autostart",
       "title": "Autostart",
