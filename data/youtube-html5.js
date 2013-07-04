@@ -124,8 +124,9 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
         // Sidebar has negative top margin by default
         var sidebar = document.getElementById("watch7-sidebar");
-        if(sidebar)
+        if(sidebar) {
             sidebar.style.marginTop = "25px";
+        }
 
         player.style.width = (resolution * 16 / 9) + "px";
         player.style.height = (resolution + 30) + "px"; // 30px for nav
@@ -166,5 +167,6 @@ function youtubeHtml5ButtonLoader(startOptions) {
 var youtubeHtml5Button = new youtubeHtml5ButtonLoader(self.options);
 
 youtubeHtml5Button.installButton();
-if(self.options.settings["autostart"])
+if(self.options.settings["autostart"]) {
     youtubeHtml5Button.registerObserver();
+}
