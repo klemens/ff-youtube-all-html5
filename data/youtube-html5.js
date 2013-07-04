@@ -39,7 +39,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
                 for(var i = 0; i < mutation.addedNodes.length; ++i) {
                     if(mutation.addedNodes[i] instanceof HTMLAnchorElement &&
                        mutation.addedNodes[i].href.contains("get.adobe.com/flashplayer")) {
-                        that.onButtonClick();
+                        that.startAndResize(options.settings["resolution"]);
                         observer.disconnect();
                         return;
                     }
@@ -55,27 +55,32 @@ function youtubeHtml5ButtonLoader(startOptions) {
         }
     }
 
-    this.onButtonClick = function() {
+    this.startAndResize = function(size) {
         var url = getUrlParams();
+
         if(url && url.v) {
-            var insertInto = document.getElementById("player-api");
+            resizePlayer(size);
 
-            if(insertInto) {
-                resizePlayer(insertInto, options.settings["resolution"]);
-
-                if(options.settings["loadtype"] == "api")
-                    insertVideoApi(url.v);
-                else if(options.settings["loadtype"] == "iframe")
-                    insertVideoIframe(url.v, insertInto);
+            if(options.settings["loadtype"] == "api") {
+                insertVideoApi(url.v);
+            } else if(options.settings["loadtype"] == "iframe") {
+                var insertInto = document.getElementById("player-api");
+                insertVideoIframe(url.v, insertInto);
             }
+
+            started = true;
         }
 
         button.blur();
     }
 
 
-    function resizePlayer(player, resolution) {
-        if(resolution == 0 || !player) return;
+    function resizePlayer(height) {
+        var player = document.getElementById("player-api");
+
+        height = parseInt(height);
+
+        if(height == 0 || !player) return;
 
         // Sidebar has negative top margin by default
         var sidebar = document.getElementById("watch7-sidebar");
