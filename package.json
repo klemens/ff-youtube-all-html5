@@ -2,7 +2,7 @@
   "name": "youtube-all-html5",
   "fullName": "YouTube ALL HTML5",
   "id": "jid1-qj0w91o64N7Eeg",
-  "description": "Play (almost) all videos on youtube without flash.",
+  "description": "Play all videos on youtube without flash and resize them to your preferred size.",
   "author": "Klemens Schölhorn",
   "icon": "logo/logo32.png",
   "icon64": "logo/logo64.png",
@@ -17,11 +17,11 @@
   }, {
       "name": "resolution",
       "title": "Resolution",
-      "description": "Change resolution of the inserted video.\n(\"Default\" keeps the youtube default)",
+      "description": "Change resolution of the video.",
       "type": "menulist",
-      "value": 0,
+      "value": "0",
       "options" : [{
-          "label": "Default",
+          "label": "Keep",
           "value": "0"
       }, {
           "label": "480p",
@@ -36,15 +36,15 @@
   }, {
       "name": "loadtype",
       "title": "Load video using",
-      "description": "Specify the method used to display the video as HTML5 video.",
+      "description": "Method used to load the HTML5 video.",
       "type": "radio",
       "value": "api",
       "options": [{
           "value": "api",
-          "label": "Player API (faster, but depending on your configuration maybe less reliable)"
+          "label": "Player API (default)"
       }, {
           "value": "iframe",
-          "label": "Embedded player (use this if API does not work)"
+          "label": "Embedded player"
       }]
   }]
 }

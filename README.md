@@ -7,10 +7,11 @@ in the html5 player.
 ## Usage ##
 
 It inserts a button right besides the serachbox that you have to click when you
-want to play the video.
+want to play the video. Using the menu right next to the button you can change
+the size of the video.
 
-This addon only makes sense if you have Flash disabled and/or activated the
-[youtube html5 test][y5]; otherwise all videos will play in Flash.
+This addon only makes sense if you have Flash disabled; otherwise all videos
+will play in Flash.
 
 Note that some videos on YouTube are only available as H264 and thus will only
 play with newer Firefox versions under windows that have the
@@ -19,7 +20,7 @@ play with newer Firefox versions under windows that have the
 ## Licence ##
 
 This addon by Klemens Schölhorn is licenced under GPLv3.<br />
-The included [HTML5 Logo][w3c] by W3C is licenced under CC-BY 3.0. 
+The modified [HTML5 Logo][w3c] by W3C is licenced under CC-BY 3.0.
 
 [y5]: https://www.youtube.com/html5
 [w3c]: http://www.w3.org/html/logo/
