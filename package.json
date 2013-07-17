@@ -25,6 +25,9 @@
           "label": "Keep",
           "value": "0"
       }, {
+          "label": "Auto",
+          "value": "-1"
+      }, {
           "label": "480p",
           "value": "480"
       }, {

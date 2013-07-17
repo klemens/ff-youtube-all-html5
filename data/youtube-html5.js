@@ -124,6 +124,22 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
         if(height == 0 || !player) return;
 
+        // try to calculate the heigt based on site width
+        if(height < 0) {
+            var playerSize = player.getBoundingClientRect();
+            var availableWidth = window.innerWidth - playerSize.left - 10;
+
+            var sizesReverse = videoSizes.slice().reverse();
+            for(var i in sizesReverse) {
+                if(availableWidth > sizesReverse[i] / 9 * 16) {
+                    height = sizesReverse[i];
+                    break;
+                }
+            }
+
+            if(height < 0) return;
+        }
+
         // Sidebar has negative top margin by default
         var sidebar = document.getElementById("watch7-sidebar");
         if(sidebar) {
