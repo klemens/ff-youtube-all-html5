@@ -1,5 +1,7 @@
 function youtubeHtml5ButtonLoader(startOptions) {
     var options = startOptions;
+    var videoSizes = [480, 720, 1080];
+
     var html5Button = null;
     var observer = null;
     var started = false;
@@ -48,15 +50,14 @@ function youtubeHtml5ButtonLoader(startOptions) {
         sizeMenu.appendChild(sizeList);
 
         // Insert values into the list
-        var sizes = [480, 720, 1080]
-        for(var i in sizes) {
+        for(var i in videoSizes) {
             var li = document.createElement("li");
             sizeList.appendChild(li);
 
             var span = document.createElement("span");
             span.className = "yt-uix-button-menu-item";
-            span.textContent = "Resize to " + sizes[i] + "p";
-            span.dataset.videosize = sizes[i];
+            span.textContent = "Resize to " + videoSizes[i] + "p";
+            span.dataset.videosize = videoSizes[i];
             span.addEventListener("click", function(event) {
                 if(started) {
                     resizePlayer(parseInt(event.target.dataset.videosize));
