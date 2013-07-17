@@ -159,7 +159,10 @@ function youtubeHtml5ButtonLoader(startOptions) {
         var player = window.document.getElementById('movie_player');
 
         if(player && player.wrappedJSObject && player.wrappedJSObject.loadVideoById) {
-            player.wrappedJSObject.loadVideoById(video);
+            setTimeout(function() {
+                player.wrappedJSObject.loadVideoById(video);
+            }, 100);
+            //player.wrappedJSObject.playVideo();
         }
     }
 
