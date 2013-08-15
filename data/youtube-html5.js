@@ -73,26 +73,32 @@ function youtubeHtml5ButtonLoader(startOptions) {
     }
 
     this.registerObserver = function() {
-        if(observer != null) return;
+        var check = function(node) {
+            return (node instanceof HTMLDivElement) &&
+                    node.classList.contains("ytp-error-content");
+        }
 
-        observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                for(var i = 0; i < mutation.addedNodes.length; ++i) {
-                    if(mutation.addedNodes[i] instanceof HTMLAnchorElement &&
-                       mutation.addedNodes[i].href.contains("get.adobe.com/flashplayer")) {
+        if(observer == null) {
+            observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    var found = false;
+
+                    found = found || check(mutation.target);
+                    for(var i = 0; i < mutation.addedNodes.length; ++i) {
+                        found = found || check(mutation.addedNodes[i]);
+                    }
+
+                    if(found) {
                         that.startAndResize(options.settings["resolution"]);
                         observer.disconnect();
-                        return;
                     }
-                }
+                });
             });
-        });
+        }
 
-        var insertInto = document.getElementById("player-api");
+        var insertInto = document.getElementById("player");
         if(insertInto) {
             observer.observe(insertInto, { childList: true, subtree: true });
-        } else {
-            observer = null;
         }
     }
 
