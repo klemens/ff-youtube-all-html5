@@ -59,11 +59,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
             span.textContent = "Resize to " + videoSizes[i] + "p";
             span.dataset.videosize = videoSizes[i];
             span.addEventListener("click", function(event) {
-                if(started) {
-                    resizePlayer(event.target.dataset.videosize);
-                } else {
-                    that.startAndResize(event.target.dataset.videosize);
-                }
+                resizePlayer(event.target.dataset.videosize);
             });
             li.appendChild(span);
         }
