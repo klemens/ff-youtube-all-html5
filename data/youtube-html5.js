@@ -5,6 +5,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
     var html5Button = null;
     var observer = null;
     var started = false;
+    var tries = 0;
 
     var that = this;
 
@@ -101,21 +102,33 @@ function youtubeHtml5ButtonLoader(startOptions) {
     this.startAndResize = function(size) {
         var url = getUrlParams();
 
+        html5Button.blur();
+
         if(url && url.v) {
             resizePlayer(size);
 
-            if(options.settings["loadtype"] == "api") {
-                insertVideoApi(url.v);
-            } else if(options.settings["loadtype"] == "iframe") {
+            if(tries == 0) {
+                if(options.settings["loadtype"] == "api") {
+                    insertVideoApi(url.v);
+                } else if(options.settings["loadtype"] == "iframe") {
+                    var insertInto = document.getElementById("player-api-legacy");
+                    insertVideoIframe(url.v, insertInto);
+                }
+            } else if(tries > 0) {
                 var insertInto = document.getElementById("player-api-legacy");
                 insertVideoIframe(url.v, insertInto);
+            } else {
+                return false;
             }
 
             started = true;
+            ++tries;
             html5Button.classList.add("yt-uix-button-toggled");
+
+            return true;
         }
 
-        html5Button.blur();
+        return false;
     }
 
 
