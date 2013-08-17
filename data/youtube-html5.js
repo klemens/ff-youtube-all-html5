@@ -71,7 +71,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
     this.registerObserver = function() {
         var check = function(node) {
             return (node instanceof HTMLDivElement) &&
-                    node.classList.contains("ytp-error-content");
+                    node.classList.contains("ytp-error");
         }
 
         if(observer == null) {
@@ -92,7 +92,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
             });
         }
 
-        var insertInto = document.getElementById("player");
+        var insertInto = document.getElementById("player-legacy");
         if(insertInto) {
             observer.observe(insertInto, { childList: true, subtree: true });
         }
@@ -107,7 +107,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
             if(options.settings["loadtype"] == "api") {
                 insertVideoApi(url.v);
             } else if(options.settings["loadtype"] == "iframe") {
-                var insertInto = document.getElementById("player-api");
+                var insertInto = document.getElementById("player-api-legacy");
                 insertVideoIframe(url.v, insertInto);
             }
 
