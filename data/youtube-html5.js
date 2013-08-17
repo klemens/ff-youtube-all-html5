@@ -120,7 +120,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
 
     function resizePlayer(height) {
-        var player = document.getElementById("player-api");
+        var player = document.getElementById("player-api-legacy");
 
         height = parseInt(height);
 
