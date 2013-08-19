@@ -17,14 +17,9 @@ Note that some videos on YouTube are only available as H264 and thus will only
 play with newer Firefox versions under windows that have the
 `media.windows-media-foundation.enabled` poperty set to true.
 
-## Attribution ##
-
-Thanks to [paranormal][paranormal-moz] for the trick with the YouTube API.
-
 ## Licence ##
 
 This addon by Klemens Schölhorn is licenced under GPLv3.<br />
 The modified [HTML5 Logo][w3c] by W3C is licenced under CC-BY 3.0.
 
 [w3c]: http://www.w3.org/html/logo/
-[paranormal-moz]: https://addons.mozilla.org/en-US/firefox/user/paranormal/
