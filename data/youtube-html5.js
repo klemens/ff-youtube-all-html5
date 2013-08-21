@@ -93,7 +93,8 @@ function youtubeHtml5ButtonLoader(startOptions) {
             });
         }
 
-        var insertInto = document.getElementById("player-legacy");
+        var insertInto = document.getElementById("player-legacy") ||
+                         document.getElementById("player");
         if(insertInto) {
             observer.observe(insertInto, { childList: true, subtree: true });
         }
@@ -111,11 +112,13 @@ function youtubeHtml5ButtonLoader(startOptions) {
                 if(options.settings["loadtype"] == "api") {
                     insertVideoApi(url.v);
                 } else if(options.settings["loadtype"] == "iframe") {
-                    var insertInto = document.getElementById("player-api-legacy");
+                    var insertInto = document.getElementById("player-api-legacy") ||
+                                     document.getElementById("player-api");
                     insertVideoIframe(url.v, insertInto);
                 }
             } else if(tries > 0) {
-                var insertInto = document.getElementById("player-api-legacy");
+                var insertInto = document.getElementById("player-api-legacy") ||
+                                 document.getElementById("player-api");
                 insertVideoIframe(url.v, insertInto);
             } else {
                 return false;
@@ -133,7 +136,8 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
 
     function resizePlayer(height) {
-        var player = document.getElementById("player-api-legacy");
+        var player = document.getElementById("player-api-legacy") ||
+                     document.getElementById("player-api");
 
         height = parseInt(height);
 
