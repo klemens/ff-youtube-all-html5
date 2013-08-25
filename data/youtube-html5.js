@@ -80,7 +80,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
                 mutations.forEach(function(mutation) {
                     var found = false;
 
-                    found = found || check(mutation.target);
+                    found |= check(mutation.target);
                     for(var i = 0; i < mutation.addedNodes.length; ++i) {
                         found = found || check(mutation.addedNodes[i]);
                     }
