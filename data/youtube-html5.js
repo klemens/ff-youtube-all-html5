@@ -77,19 +77,19 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
         if(observer == null) {
             observer = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    var found = false;
+                var found = false;
 
+                mutations.forEach(function(mutation) {
                     found = found || check(mutation.target);
                     for(var i = 0; i < mutation.addedNodes.length; ++i) {
                         found = found || check(mutation.addedNodes[i]);
                     }
-
-                    if(found) {
-                        that.startAndResize(options.settings["resolution"]);
-                        observer.disconnect();
-                    }
                 });
+
+                if(found) {
+                    that.startAndResize(options.settings["resolution"]);
+                    observer.disconnect();
+                }
             });
         }
 
