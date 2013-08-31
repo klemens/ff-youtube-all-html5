@@ -134,6 +134,41 @@ function youtubeHtml5ButtonLoader(startOptions) {
         return false;
     }
 
+    this.hideFlashPlugin = function() {
+        // By Alexander Schlarb, alexander4456@xmine128.tk
+        var unsafeNavigator = window.navigator.wrappedJSObject;
+
+        // Generate new plugins list
+        var plugins = [];
+        for(var i = 0; i < unsafeNavigator.plugins.length; ++i) {
+            var plugin = unsafeNavigator.plugins[i];
+
+            if(plugin.name != "Shockwave Flash") {
+                plugins.push(plugin);
+            }
+        }
+
+        // Use fake plugins list overwrite
+        unsafeNavigator.__defineGetter__("plugins", function() {
+            return plugins;
+        });
+
+        // Generate new MIME types list
+        var mimeTypes = [];
+        for(var i = 0; i < unsafeNavigator.mimeTypes.length; ++i) {
+            var mimeType = unsafeNavigator.mimeTypes[i];
+
+            if(mimeType.type != "application/x-shockwave-flash") {
+                mimeTypes.push(mimeType);
+            }
+        }
+
+        // Register fake mime types list overwrite
+        unsafeNavigator.__defineGetter__("mimeTypes", function() {
+            return mimeTypes;
+        });
+    }
+
 
     function resizePlayer(height) {
         var player = document.getElementById("player-api-legacy") ||
@@ -213,7 +248,14 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
 var youtubeHtml5Button = new youtubeHtml5ButtonLoader(self.options);
 
-youtubeHtml5Button.installButton();
-if(self.options.settings["autostart"]) {
-    youtubeHtml5Button.registerObserver();
-}
+// remove flash plugin from the supported plugin list
+// this makes youtube think flash is disabled when click_to_play is enabled
+youtubeHtml5Button.hideFlashPlugin();
+
+window.addEventListener("DOMContentLoaded", function() {
+    youtubeHtml5Button.installButton();
+    
+    if(self.options.settings["autostart"]) {
+        youtubeHtml5Button.registerObserver();
+    }
+}, true);
