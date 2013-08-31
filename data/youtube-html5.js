@@ -217,3 +217,15 @@ youtubeHtml5Button.installButton();
 if(self.options.settings["autostart"]) {
     youtubeHtml5Button.registerObserver();
 }
+
+mmobserver = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        for(var i = 0; i < mutation.removedNodes.length; ++i) {
+            if(mutation.removedNodes[i].id && mutation.removedNodes[i].id == "progress") {
+                alert(window.location.href);
+                return;
+            }
+        }
+    });
+});
+mmobserver.observe(document.body, { childList: true });
