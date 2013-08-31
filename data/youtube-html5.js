@@ -181,7 +181,6 @@ function youtubeHtml5ButtonLoader(startOptions) {
             setTimeout(function() {
                 player.wrappedJSObject.loadVideoById(video);
             }, 100);
-            //player.wrappedJSObject.playVideo();
         }
     }
 
