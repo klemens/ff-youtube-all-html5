@@ -214,4 +214,8 @@ function youtubeHtml5ButtonLoader(startOptions) {
 var youtubeHtml5Button = new youtubeHtml5ButtonLoader(self.options);
 
 youtubeHtml5Button.installButton();
-youtubeHtml5Button.registerObserver();
+
+// autostart if not using the ie method
+if("ie" != self.options.settings["loadtype"]) {
+    youtubeHtml5Button.registerObserver();
+}

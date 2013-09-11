@@ -32,20 +32,17 @@
           "value": "1080"
       }]
   }, {
-      "name": "emulateIE",
-      "title": "Emulate IE",
-      "description": "Plays videos by pretenting to be an IE 10",
-      "type": "bool",
-      "value": true
-  }, {
       "name": "loadtype",
-      "title": "Load video using",
-      "description": "Method used to load the HTML5 video.",
+      "title": "Video-loading method",
+      "description": "Note: The button always uses the API method on first click and the embedding method on second click.",
       "type": "radio",
-      "value": "api",
+      "value": "ie",
       "options": [{
+          "value": "ie",
+          "label": "Emulate Internet Explorer (default)"
+      }, {
           "value": "api",
-          "label": "Player API (default)"
+          "label": "Player API"
       }, {
           "value": "iframe",
           "label": "Embedded player"
