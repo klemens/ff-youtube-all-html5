@@ -1,0 +1,4 @@
+/* Remove red "flash not found" alert bar */
+.yt-alert.yt-alert-default.yt-alert-error.yt-alert-player {
+    display: none !important;
+}
