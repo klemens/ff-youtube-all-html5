@@ -19,7 +19,9 @@ play with newer Firefox versions under windows that have the
 
 ## Attribution ##
 
-Thanks to [Raylan Givens][rg] for the hint at emulating IE.
+Thanks to [Raylan Givens][rg] for the hint at emulating IE and
+[Alexander Schlarb][as] for his patch which makes the addon working with
+firefox's click_to_play.
 
 ## Licence ##
 
@@ -28,3 +30,4 @@ The modified [HTML5 Logo][w3c] by W3C is licenced under CC-BY 3.0.
 
 [w3c]: http://www.w3.org/html/logo/
 [rg]: https://addons.mozilla.org/de/firefox/user/Cullen-Bohannon/
+[as]: https://github.com/alexander255
