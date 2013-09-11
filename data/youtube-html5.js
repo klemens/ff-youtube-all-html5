@@ -214,6 +214,4 @@ function youtubeHtml5ButtonLoader(startOptions) {
 var youtubeHtml5Button = new youtubeHtml5ButtonLoader(self.options);
 
 youtubeHtml5Button.installButton();
-if(self.options.settings["autostart"]) {
-    youtubeHtml5Button.registerObserver();
-}
+youtubeHtml5Button.registerObserver();
