@@ -38,6 +38,12 @@
           "value": "1080"
       }]
   }, {
+      "name": "emulateIE",
+      "title": "Emulate IE",
+      "description": "Plays videos by pretenting to be an IE 10",
+      "type": "bool",
+      "value": true
+  }, {
       "name": "loadtype",
       "title": "Load video using",
       "description": "Method used to load the HTML5 video.",
