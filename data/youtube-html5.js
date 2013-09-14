@@ -171,21 +171,26 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
 
     function resizePlayer(height) {
-        var player = document.getElementById("player-api-legacy") ||
-                     document.getElementById("player-api");
+        var playerApi = document.getElementById("player-api-legacy") ||
+                        document.getElementById("player-api");
+        var player = document.getElementById("player-legacy") ||
+                     document.getElementById("player");
 
         height = parseInt(height);
 
-        if(height == 0 || !player) return;
+        if(height == 0 || !playerApi || !player) return;
+
+        // this differs between youtube designs, known: 225px, 0px (new)
+        var leftPadding = parseInt(window.getComputedStyle(player).
+                                   getPropertyValue('padding-left'));
 
         // try to calculate the heigt based on site width
         if(height < 0) {
-            var playerSize = player.getBoundingClientRect();
-            var availableWidth = window.innerWidth - playerSize.left - 10;
+            var availableWidth = window.innerWidth - leftPadding;
 
             var sizesReverse = videoSizes.slice().reverse();
             for(var i in sizesReverse) {
-                if(availableWidth > sizesReverse[i] / 9 * 16) {
+                if(availableWidth >= (sizesReverse[i] * 16 / 9)) {
                     height = sizesReverse[i];
                     break;
                 }
@@ -197,11 +202,17 @@ function youtubeHtml5ButtonLoader(startOptions) {
         // Sidebar has negative top margin by default
         var sidebar = document.getElementById("watch7-sidebar");
         if(sidebar) {
-            sidebar.style.marginTop = "25px";
+            sidebar.style.marginTop = "5px";
         }
 
-        player.style.width = (height * 16 / 9) + "px";
-        player.style.height = (height + 30) + "px"; // 30px for nav
+        // new youtube design (09-2013)
+        if(0 == leftPadding) {
+            player.style.width = (height * 16 / 9) + "px";
+            player.style.marginBottom = "28px";
+        }
+
+        playerApi.style.width = (height * 16 / 9) + "px";
+        playerApi.style.height = (height + 30) + "px"; // 30px for nav
     }
 
     function insertVideoApi(video) {
