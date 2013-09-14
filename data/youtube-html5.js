@@ -32,7 +32,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
         html5Button.style.backgroundRepeat = "no-repeat";
         html5Button.style.backgroundPosition = "5px 50%";
         html5Button.addEventListener("click", function() {
-            that.startAndResize(options.settings["resolution"]);
+            that.startVideo();
         });
         buttonGroup.appendChild(html5Button);
 
@@ -87,7 +87,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
                 });
 
                 if(found) {
-                    that.startAndResize(options.settings["resolution"]);
+                    that.startVideo();
                     observer.disconnect();
                 }
             });
@@ -112,6 +112,10 @@ function youtubeHtml5ButtonLoader(startOptions) {
             observer.disconnect();
             disconnect = null;
         }
+    }
+
+    this.startVideo = function() {
+        that.startAndResize(options.settings["resolution"]);
     }
 
     this.startAndResize = function(size) {
@@ -286,6 +290,11 @@ if("ie" != self.options.settings["loadtype"]) {
             for(var i = 0; i < mutation.removedNodes.length; ++i) {
                 if(mutation.removedNodes[i].id && mutation.removedNodes[i].id == "progress") {
                     youtubeHtml5Button.reset();
+
+                    var error = document.querySelector("#movie_player > .ytp-error");
+                    if(window.getComputedStyle(error).display != "none") {
+                        youtubeHtml5Button.startVideo();
+                    }
                     return;
                 }
             }
