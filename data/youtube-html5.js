@@ -99,6 +99,20 @@ function youtubeHtml5ButtonLoader(startOptions) {
             observer.observe(insertInto, { childList: true, subtree: true });
         }
     }
+    
+    this.reset = function() {
+        if(html5Button) {
+            html5Button.classList.remove("yt-uix-button-toggled");
+        }
+        
+        started = false;
+        tries = 0;
+        
+        if(observer) {
+            observer.disconnect();
+            disconnect = null;
+        }
+    }
 
     this.startAndResize = function(size) {
         var url = getUrlParams();
@@ -222,7 +236,7 @@ mmobserver = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
         for(var i = 0; i < mutation.removedNodes.length; ++i) {
             if(mutation.removedNodes[i].id && mutation.removedNodes[i].id == "progress") {
-                alert(window.location.href);
+                youtubeHtml5Button.reset();
                 return;
             }
         }
