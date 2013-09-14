@@ -270,25 +270,26 @@ var youtubeHtml5Button = new youtubeHtml5ButtonLoader(self.options);
 
 // remove flash plugin from the supported plugin list
 // this makes youtube think flash is disabled when click_to_play is enabled
-youtubeHtml5Button.hideFlashPlugin();
+if(!(window.wrappedJSObject.ytplayer && window.wrappedJSObject.ytplayer.config &&
+     window.wrappedJSObject.ytplayer.config.args["live_playback"])) {
+    youtubeHtml5Button.hideFlashPlugin();
+}
 
-window.addEventListener("DOMContentLoaded", function() {
-    youtubeHtml5Button.installButton();
+youtubeHtml5Button.installButton();
 
-    // autostart if not using the ie method
-    if("ie" != self.options.settings["loadtype"]) {
-        youtubeHtml5Button.registerObserver();
-        
-        spfObserver = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                for(var i = 0; i < mutation.removedNodes.length; ++i) {
-                    if(mutation.removedNodes[i].id && mutation.removedNodes[i].id == "progress") {
-                        youtubeHtml5Button.reset();
-                        return;
-                    }
+// autostart if not using the ie method
+if("ie" != self.options.settings["loadtype"]) {
+    youtubeHtml5Button.registerObserver();
+
+    spfObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            for(var i = 0; i < mutation.removedNodes.length; ++i) {
+                if(mutation.removedNodes[i].id && mutation.removedNodes[i].id == "progress") {
+                    youtubeHtml5Button.reset();
+                    return;
                 }
-            });
+            }
         });
-        spfObserver.observe(document.body, { childList: true });
-    }
-}, true);
+    });
+    spfObserver.observe(document.body, { childList: true });
+}
