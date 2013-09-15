@@ -2,7 +2,7 @@
   "name": "youtube-all-html5",
   "fullName": "YouTube ALL HTML5",
   "id": "jid1-qj0w91o64N7Eeg",
-  "description": "Play all videos on youtube without flash and resize them to your preferred size.",
+  "description": "Play all videos on youtube and most videos on vimeo without flash.",
   "author": "Klemens Schölhorn",
   "icon": "logo/logo32.png",
   "icon64": "logo/logo64.png",
@@ -11,15 +11,15 @@
   "version": "1.0.4",
   "preferences": [{
       "name": "resolution",
-      "title": "Resolution",
-      "description": "Change resolution of the video.",
+      "title": "YouTube video size",
+      "description": "Automatically change the size of YouTube videos.",
       "type": "menulist",
       "value": 0,
       "options" : [{
-          "label": "Keep",
+          "label": "Do not change",
           "value": "0"
       }, {
-          "label": "Auto",
+          "label": "Calculate from window size",
           "value": "-1"
       }, {
           "label": "480p",
@@ -33,7 +33,7 @@
       }]
   }, {
       "name": "loadtype",
-      "title": "Video-loading method",
+      "title": "YouTube video loading method",
       "description": "Note: The button always uses the API method on first click and the embedding method on second click.",
       "type": "radio",
       "value": "ie",
