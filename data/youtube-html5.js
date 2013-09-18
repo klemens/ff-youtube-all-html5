@@ -203,6 +203,13 @@ function youtubeHtml5ButtonLoader(startOptions) {
         });
     }
 
+    this.autoSizeVideo = function() {
+        // only resize normal videos (no playlist videos)
+        if(!getUrlParams().list) {
+            resizePlayer(options.settings["resolution"]);
+        }
+    }
+
 
     function resizePlayer(height) {
         var playerApi = document.getElementById("player-api-legacy") ||
@@ -298,6 +305,7 @@ if(!(window.wrappedJSObject.ytplayer && window.wrappedJSObject.ytplayer.config &
 // install button if we are on a video site
 if(youtubeHtml5Button.isVideoSite()) {
     youtubeHtml5Button.installButton();
+    youtubeHtml5Button.autoSizeVideo();
 
     // autostart if not using the ie method
     if("ie" != self.options.settings["loadtype"]) {
@@ -315,6 +323,7 @@ if(window.wrappedJSObject.ytspf && window.wrappedJSObject.ytspf.enabled) {
 
                     if(youtubeHtml5Button.isVideoSite()) {
                         youtubeHtml5Button.showButton();
+                        youtubeHtml5Button.autoSizeVideo();
 
                         if("ie" != self.options.settings["loadtype"]) {
                             youtubeHtml5Button.startVideoOnError();
