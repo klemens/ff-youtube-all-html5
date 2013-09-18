@@ -70,7 +70,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
         insertInto.insertBefore(buttonGroup, insertInto.firstChild);
     }
 
-    this.registerObserver = function() {
+    this.startVideoOnError = function() {
         var check = function(node) {
             return (node instanceof HTMLDivElement) &&
                     node.classList.contains("ytp-error");
@@ -276,7 +276,7 @@ youtubeHtml5Button.installButton();
 
 // autostart if not using the ie method
 if("ie" != self.options.settings["loadtype"]) {
-    youtubeHtml5Button.registerObserver();
+    youtubeHtml5Button.startVideoOnError();
 
     spfObserver = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
