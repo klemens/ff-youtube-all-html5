@@ -89,6 +89,14 @@ function youtubeHtml5ButtonLoader(startOptions) {
                     node.classList.contains("ytp-error");
         }
 
+        // check if the error is already shown
+        var error = document.querySelector("#movie_player > .ytp-error");
+        if(error && window.getComputedStyle(error).display != "none") {
+            youtubeHtml5Button.startVideo();
+            return;
+        }
+
+        // otherwise wait for it
         if(observer == null) {
             observer = new MutationObserver(function(mutations) {
                 var found = false;
@@ -107,10 +115,10 @@ function youtubeHtml5ButtonLoader(startOptions) {
             });
         }
 
-        var insertInto = document.getElementById("player-legacy") ||
-                         document.getElementById("player");
-        if(insertInto) {
-            observer.observe(insertInto, { childList: true, subtree: true });
+        var observee = document.getElementById("player-legacy") ||
+                       document.getElementById("player");
+        if(observee) {
+            observer.observe(observee, { childList: true, subtree: true });
         }
     }
     
