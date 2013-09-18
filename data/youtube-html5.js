@@ -33,6 +33,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
         html5Button.style.backgroundPosition = "5px 50%";
         html5Button.addEventListener("click", function() {
             that.startVideo();
+            html5Button.blur();
         });
         buttonGroup.appendChild(html5Button);
 
@@ -115,17 +116,9 @@ function youtubeHtml5ButtonLoader(startOptions) {
     }
 
     this.startVideo = function() {
-        that.startAndResize(options.settings["resolution"]);
-    }
-
-    this.startAndResize = function(size) {
         var url = getUrlParams();
 
-        html5Button.blur();
-
         if(url && url.v) {
-            resizePlayer(size);
-
             if(tries == 0) {
                 if(options.settings["loadtype"] == "api") {
                     insertVideoApi(url.v);
