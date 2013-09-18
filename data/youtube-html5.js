@@ -243,6 +243,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
         // Sidebar has negative top margin by default
         var sidebar = document.getElementById("watch7-sidebar");
         if(sidebar) {
+            sidebar.style.transition = "none";
             sidebar.style.marginTop = "5px";
         }
 
