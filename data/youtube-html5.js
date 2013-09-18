@@ -69,6 +69,20 @@ function youtubeHtml5ButtonLoader(startOptions) {
         insertInto.insertBefore(buttonGroup, insertInto.firstChild);
     }
 
+    this.showButton = function() {
+        if(html5Button) {
+            html5Button.parentNode.style.removeProperty("display");
+        } else {
+            that.installButton();
+        }
+    }
+
+    this.hideButton = function() {
+        if(html5Button) {
+            html5Button.parentNode.style.setProperty("display", "none");
+        }
+    }
+
     this.startVideoOnError = function() {
         var check = function(node) {
             return (node instanceof HTMLDivElement) &&
