@@ -295,22 +295,34 @@ if(!(window.wrappedJSObject.ytplayer && window.wrappedJSObject.ytplayer.config &
     youtubeHtml5Button.hideFlashPlugin();
 }
 
-youtubeHtml5Button.installButton();
+// install button if we are on a video site
+if(youtubeHtml5Button.isVideoSite()) {
+    youtubeHtml5Button.installButton();
 
-// autostart if not using the ie method
-if("ie" != self.options.settings["loadtype"]) {
-    youtubeHtml5Button.startVideoOnError();
+    // autostart if not using the ie method
+    if("ie" != self.options.settings["loadtype"]) {
+        youtubeHtml5Button.startVideoOnError();
+    }
+}
 
-    spfObserver = new MutationObserver(function(mutations) {
+// Listen for page changes when spf is enabled
+if(window.wrappedJSObject.ytspf && window.wrappedJSObject.ytspf.enabled) {
+    var spfObserver = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             for(var i = 0; i < mutation.removedNodes.length; ++i) {
                 if(mutation.removedNodes[i].id && mutation.removedNodes[i].id == "progress") {
                     youtubeHtml5Button.reset();
 
-                    var error = document.querySelector("#movie_player > .ytp-error");
-                    if(window.getComputedStyle(error).display != "none") {
-                        youtubeHtml5Button.startVideo();
+                    if(youtubeHtml5Button.isVideoSite()) {
+                        youtubeHtml5Button.showButton();
+
+                        if("ie" != self.options.settings["loadtype"]) {
+                            youtubeHtml5Button.startVideoOnError();
+                        }
+                    } else {
+                        youtubeHtml5Button.hideButton();
                     }
+
                     return;
                 }
             }
