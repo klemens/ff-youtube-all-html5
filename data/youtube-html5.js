@@ -314,29 +314,45 @@ if(youtubeHtml5Button.isVideoSite()) {
     }
 }
 
-// Listen for page changes when spf is enabled
+// check if spf is enabled
 if(window.wrappedJSObject.ytspf && window.wrappedJSObject.ytspf.enabled) {
-    var spfObserver = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            for(var i = 0; i < mutation.removedNodes.length; ++i) {
-                if(mutation.removedNodes[i].id && mutation.removedNodes[i].id == "progress") {
-                    youtubeHtml5Button.reset();
-
-                    if(youtubeHtml5Button.isVideoSite()) {
-                        youtubeHtml5Button.showButton();
-                        youtubeHtml5Button.autoSizeVideo();
-
-                        if("ie" != self.options.settings["loadtype"]) {
-                            youtubeHtml5Button.startVideoOnError();
-                        }
-                    } else {
-                        youtubeHtml5Button.hideButton();
-                    }
-
+    if(self.options.settings["yt-disable-spf"]) {
+        // disable spf
+        window.addEventListener("click", function(event) {
+            // check if click came from a spf link
+            var target = event.target;
+            while(target) {
+                if(target.classList && target.classList.contains("spf-link")) {
+                    event.stopPropagation();
                     return;
                 }
+                target = target.parentNode;
             }
+        }, true);
+    } else {
+        // listen for spf page changes, update button (and start video)
+        var spfObserver = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                for(var i = 0; i < mutation.removedNodes.length; ++i) {
+                    if(mutation.removedNodes[i].id && mutation.removedNodes[i].id == "progress") {
+                        youtubeHtml5Button.reset();
+
+                        if(youtubeHtml5Button.isVideoSite()) {
+                            youtubeHtml5Button.showButton();
+                            youtubeHtml5Button.autoSizeVideo();
+
+                            if("ie" != self.options.settings["loadtype"]) {
+                                youtubeHtml5Button.startVideoOnError();
+                            }
+                        } else {
+                            youtubeHtml5Button.hideButton();
+                        }
+
+                        return;
+                    }
+                }
+            });
         });
-    });
-    spfObserver.observe(document.body, { childList: true });
+        spfObserver.observe(document.body, { childList: true });
+    }
 }

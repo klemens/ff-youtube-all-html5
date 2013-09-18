@@ -32,6 +32,12 @@
           "value": "1080"
       }]
   }, {
+      "name": "yt-disable-spf",
+      "title": "Disable YouTube SPF",
+      "description": "SPF loads pages through JavaScript, which causes some problems for this add-on",
+      "type": "bool",
+      "value": true
+  }, {
       "name": "loadtype",
       "title": "YouTube video loading method",
       "description": "Note: The button always uses the API method on first click and the embedding method on second click.",
