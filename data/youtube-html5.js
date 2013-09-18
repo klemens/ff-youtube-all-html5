@@ -121,6 +121,10 @@ function youtubeHtml5ButtonLoader(startOptions) {
             observer.observe(observee, { childList: true, subtree: true });
         }
     }
+
+    this.isVideoSite = function() {
+        return /\/watch.*/.test(window.location.pathname);
+    }
     
     this.reset = function() {
         if(html5Button) {
