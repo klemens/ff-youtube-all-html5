@@ -4,7 +4,6 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
     var html5Button = null;
     var observer = null;
-    var started = false;
     var tries = 0;
 
     var that = this;
@@ -106,7 +105,6 @@ function youtubeHtml5ButtonLoader(startOptions) {
             html5Button.classList.remove("yt-uix-button-toggled");
         }
         
-        started = false;
         tries = 0;
         
         if(observer) {
@@ -135,7 +133,6 @@ function youtubeHtml5ButtonLoader(startOptions) {
                 return false;
             }
 
-            started = true;
             ++tries;
             html5Button.classList.add("yt-uix-button-toggled");
 
