@@ -38,6 +38,12 @@
       "type": "bool",
       "value": true
   }, {
+      "name": "yt-disable-flash",
+      "title": "Disable Flash on YouTube",
+      "description": "Use this if you want to keep Flash enabled but use the HTML5 Player on YouTube.",
+      "type": "bool",
+      "value": false
+  }, {
       "name": "loadtype",
       "title": "YouTube video loading method",
       "description": "Note: The button always uses the API method on first click and the embedding method on second click.",
