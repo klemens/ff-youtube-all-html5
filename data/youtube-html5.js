@@ -144,9 +144,9 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
         if(url && url.v) {
             if(tries == 0) {
-                if(options.settings["loadtype"] == "api") {
+                if(options.settings["yt-loadtype"] == "api") {
                     insertVideoApi(url.v);
-                } else if(options.settings["loadtype"] == "iframe") {
+                } else if(options.settings["yt-loadtype"] == "iframe") {
                     var insertInto = document.getElementById("player-api-legacy") ||
                                      document.getElementById("player-api");
                     insertVideoIframe(url.v, insertInto);
@@ -332,7 +332,7 @@ if(youtubeHtml5Button.isVideoSite()) {
     youtubeHtml5Button.autoSizeVideo();
 
     // autostart if not using the ie method
-    if("ie" != self.options.settings["loadtype"]) {
+    if("ie" != self.options.settings["yt-loadtype"]) {
         youtubeHtml5Button.startVideoOnError();
     }
 }
@@ -364,7 +364,7 @@ if(window.wrappedJSObject.ytspf && window.wrappedJSObject.ytspf.enabled) {
                             youtubeHtml5Button.showButton();
                             youtubeHtml5Button.autoSizeVideo();
 
-                            if("ie" != self.options.settings["loadtype"]) {
+                            if("ie" != self.options.settings["yt-loadtype"]) {
                                 youtubeHtml5Button.startVideoOnError();
                             }
                         } else {

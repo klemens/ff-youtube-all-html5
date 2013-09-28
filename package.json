@@ -44,7 +44,7 @@
       "type": "bool",
       "value": false
   }, {
-      "name": "loadtype",
+      "name": "yt-loadtype",
       "title": "YouTube video loading method",
       "description": "Note: The button always uses the API method on first click and the embedding method on second click.",
       "type": "radio",
