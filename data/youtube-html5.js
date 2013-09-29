@@ -340,18 +340,16 @@ if(youtubeHtml5Button.isVideoSite()) {
 // check if spf is enabled
 if(window.wrappedJSObject.ytspf && window.wrappedJSObject.ytspf.enabled) {
     if(self.options.settings["yt-disable-spf"]) {
-        // disable spf
-        window.addEventListener("click", function(event) {
-            // check if click came from a spf link
-            var target = event.target;
-            while(target) {
-                if(target.classList && target.classList.contains("spf-link")) {
-                    event.stopPropagation();
-                    return;
-                }
-                target = target.parentNode;
+        // disable spf feature by overriding pushState
+        window.history.wrappedJSObject.__proto__.pushState = function(state, title, url) {
+            var progressBar = window.document.getElementById("progress");
+            if(progressBar) {
+                // remove spf progress bar
+                progressBar.parentNode.removeChild(progressBar);
             }
-        }, true);
+            // redirect to spf destination
+            window.location.href = url;
+        }
     } else {
         // listen for spf page changes, update button (and start video)
         var spfObserver = new MutationObserver(function(mutations) {
