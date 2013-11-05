@@ -255,29 +255,6 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
         playerApi.style.width = (height * 16 / 9) + "px";
         playerApi.style.height = (height + 30) + "px"; // 30px for nav
-
-        // function which sets the quality of the video to the right value
-        var ensureQuality = function() {
-            var qualitySetting = "default";
-            switch(height) {
-                case 480: qualitySetting = "large"; break;
-                case 720: qualitySetting = "hd720"; break;
-                case 1080: qualitySetting = "hd1080"; break;
-            }
-
-            var player = window.document.getElementById('movie_player');
-            if(player && player.wrappedJSObject && player.wrappedJSObject.setPlaybackQuality) {
-                // we do not have to check if the quality is available or already
-                // set: setPlaybackQuality handles all these cases
-                player.wrappedJSObject.setPlaybackQuality(qualitySetting);
-            }
-
-            // quality only needs to be set only once and not after each pausing
-            document.removeEventListener("play", ensureQuality, true);
-        }
-
-        // register above function to run when video starts
-        document.addEventListener("play", ensureQuality, true);
     }
 
     function insertVideoApi(video) {
