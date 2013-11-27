@@ -6,7 +6,15 @@ var ensureYTParameters = function(event) {
         if(player && player.wrappedJSObject) {
             ensureYTParameters.runOnce = true;
 
-            // pause/play the video to enforce video quality
+            // set desired video quality and pause/play the video to enforce it
+            if("auto" == self.options.settings["yt-video-quality"]) {
+                var height = parseInt(window.getComputedStyle(player).width) * 9 / 16;
+                if(height >= 720) {
+                    player.wrappedJSObject.setPlaybackQuality("hd720");
+                } // else: medium is already the default
+            } else {
+                player.wrappedJSObject.setPlaybackQuality(self.options.settings["yt-video-quality"]);
+            }
             player.wrappedJSObject.pauseVideo();
             setTimeout(function() {
                 player.wrappedJSObject.playVideo();

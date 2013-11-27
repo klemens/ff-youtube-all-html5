@@ -32,6 +32,22 @@
           "value": "1080"
       }]
   }, {
+      "name": "yt-video-quality",
+      "title": "YouTube video quality",
+      "description": "Choose the video quality to load.\n\"Auto\" chooses the right quality for the size selected above.",
+      "type": "menulist",
+      "value": "auto",
+      "options" : [{
+          "label": "Auto",
+          "value": "auto"
+      }, {
+          "label": "360p",
+          "value": "medium"
+      }, {
+          "label": "720p",
+          "value": "hd720"
+      }]
+  }, {
       "name": "yt-disable-spf",
       "title": "Disable YouTube SPF",
       "description": "SPF loads pages through JavaScript, which causes some problems for this add-on",
