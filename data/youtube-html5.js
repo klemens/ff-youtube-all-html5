@@ -142,7 +142,11 @@ function youtubeHtml5ButtonLoader(startOptions) {
     this.isVideoSite = function() {
         return /\/watch.*/.test(window.location.pathname);
     }
-    
+
+    this.isPlaylistSite = function() {
+        return !! (getUrlParams().list);
+    }
+
     this.reset = function() {
         if(html5Button) {
             html5Button.classList.remove("yt-uix-button-toggled");
@@ -214,7 +218,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
     this.autoSizeVideo = function() {
         // only resize normal videos (no playlist videos)
-        if(!getUrlParams().list) {
+        if(!that.isPlaylistSite()) {
             resizePlayer(options.settings["resolution"]);
         }
     }
@@ -318,7 +322,9 @@ if(youtubeHtml5Button.isVideoSite()) {
     youtubeHtml5Button.autoSizeVideo();
 
     // autostart if not using the ie method
-    if("ie" != self.options.settings["yt-loadtype"]) {
+    // or on playlist sites, where the ie method does not work
+    if("ie" != self.options.settings["yt-loadtype"]
+       || youtubeHtml5Button.isPlaylistSite()) {
         youtubeHtml5Button.startVideoOnError();
     }
 }
@@ -348,7 +354,8 @@ if(window.wrappedJSObject.ytspf && window.wrappedJSObject.ytspf.enabled) {
                             youtubeHtml5Button.showButton();
                             youtubeHtml5Button.autoSizeVideo();
 
-                            if("ie" != self.options.settings["yt-loadtype"]) {
+                            if("ie" != self.options.settings["yt-loadtype"]
+                               || youtubeHtml5Button.isPlaylistSite()) {
                                 youtubeHtml5Button.startVideoOnError();
                             }
                         } else {
