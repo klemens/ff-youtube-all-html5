@@ -29,10 +29,12 @@ var ensureYTParameters = function(event) {
     }
 
     // continually maximize video size, because youtube changes this eg. when
-    // switching to fullscreen and back
-    if(event.target.style && event.target.style.width != "100%") {
+    // switching to fullscreen and back or using the player size button
+    if(event.target.style) {
         event.target.style.width = "100%";
         event.target.style.height = "100%";
+        event.target.style.top = "0";
+        event.target.style.left = "0";
     }
 
     // scale annotations, because they are not scaled automatically (see above);
