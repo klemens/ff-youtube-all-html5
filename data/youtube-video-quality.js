@@ -34,6 +34,18 @@ var ensureYTParameters = function(event) {
         event.target.style.width = "100%";
         event.target.style.height = "100%";
     }
+
+    // scale annotations, because they are not scaled automatically (see above);
+    // however, they are scaled automatically in fullscreen mode
+    var scale = 1;
+    var fullscreenElement = document.mozFullScreenElement || document.fullscreenElement;
+    if(!fullscreenElement) {
+        scale = parseInt(document.getElementById("player-api").style.width)
+                / parseInt(document.querySelector(".html5-video-content").style.width);
+    }
+    for(var annotation of document.querySelectorAll(".video-annotations")) {
+        annotation.style.transform = "scale(" + scale + ")";
+    }
 }
 
 // register function to run when video is running
