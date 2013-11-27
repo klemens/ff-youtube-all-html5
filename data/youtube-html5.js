@@ -38,7 +38,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
         // create sizes menu
         var sizeMenu = document.createElement("button");
-        sizeMenu.className = "end flip yt-uix-button yt-uix-button-default yt-uix-button-empty"
+        sizeMenu.className = "end flip yt-uix-button yt-uix-button-default yt-uix-button-size-default yt-uix-button-empty"
         buttonGroup.appendChild(sizeMenu);
 
         var arrowImage = document.createElement("img");
@@ -57,6 +57,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
             var span = document.createElement("span");
             span.className = "yt-uix-button-menu-item";
+            span.style.padding = "0 1em";
             span.textContent = "Resize to " + videoSizes[i] + "p";
             span.dataset.videosize = videoSizes[i];
             span.addEventListener("click", function(event) {
@@ -64,6 +65,22 @@ function youtubeHtml5ButtonLoader(startOptions) {
             });
             li.appendChild(span);
         }
+
+        // add settings link
+        var li = document.createElement("li");
+        sizeList.appendChild(li);
+        var span = document.createElement("span");
+        span.className = "yt-uix-button-menu-item";
+        span.style.padding = "0 1em 0 2.8em";
+        span.style.backgroundImage = "url(" + options.settingsImageUrl + ")";
+        span.style.backgroundRepeat = "no-repeat";
+        span.style.backgroundSize = "14px";
+        span.style.backgroundPosition = "1em 5px";
+        span.textContent = "Settings";
+        span.addEventListener("click", function(event) {
+            self.port.emit("openSettings", "");
+        });
+        li.appendChild(span);
 
         // insert into dom
         insertInto.insertBefore(buttonGroup, insertInto.firstChild);
