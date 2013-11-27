@@ -1,20 +1,26 @@
-// function which sets the quality of the video to the right value
-var ensureQuality = function() {
-    var player = window.document.getElementById('movie_player');
-    if(player && player.wrappedJSObject && player.wrappedJSObject.setPlaybackQuality) {
-        // by pausing and then resuming, we force the youtube player to load
-        // the right version of the video based on the size of the player
-        player.wrappedJSObject.pauseVideo();
-        setTimeout(function() {
-            player.wrappedJSObject.playVideo();
-        }, 200);
+// function which sets the quality, size and volume of the video to the right values
+var ensureYTParameters = function(event) {
+    // run this part of the function only on the beginning of the video
+    if(!ensureYTParameters.runOnce) {
+        var player = window.document.getElementById('movie_player');
+        if(player && player.wrappedJSObject) {
+            ensureYTParameters.runOnce = true;
 
-        // quality only needs to be set once
-        document.removeEventListener("play", ensureQuality, true);
-        document.removeEventListener("timeupdate", ensureQuality, true);
+            // pause/play the video to enforce video quality
+            player.wrappedJSObject.pauseVideo();
+            setTimeout(function() {
+                player.wrappedJSObject.playVideo();
+            }, 200);
+        }
+    }
+
+    // continually maximize video size, because youtube changes this eg. when
+    // switching to fullscreen and back
+    if(event.target.style && event.target.style.width != "100%") {
+        event.target.style.width = "100%";
+        event.target.style.height = "100%";
     }
 }
 
-// register function to run when video starts or if it fails when it is running
-document.addEventListener("play", ensureQuality, true);
-document.addEventListener("timeupdate", ensureQuality, true);
+// register function to run when video is running
+document.addEventListener("timeupdate", ensureYTParameters, true);
