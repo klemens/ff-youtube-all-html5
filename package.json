@@ -60,6 +60,12 @@
       "type": "bool",
       "value": false
   }, {
+      "name": "yt-fix-volume",
+      "title": "Fix volume bug on YouTube",
+      "description": "This sets the volume to 100% on start of the video.",
+      "type": "bool",
+      "value": false
+  }, {
       "name": "yt-loadtype",
       "title": "YouTube video loading method",
       "description": "Note: The button always uses the API method on first click and the embedding method on second click.",

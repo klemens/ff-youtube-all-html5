@@ -6,6 +6,12 @@ var ensureYTParameters = function(event) {
         if(player && player.wrappedJSObject) {
             ensureYTParameters.runOnce = true;
 
+            // set volume to 100% to work aroung a youtube bug which reduces
+            // the volume without user interaction
+            if(self.options.settings["yt-fix-volume"]) {
+                player.wrappedJSObject.setVolume(100);
+            }
+
             // set desired video quality and pause/play the video to enforce it
             if("auto" == self.options.settings["yt-video-quality"]) {
                 var height = parseInt(window.getComputedStyle(player).width) * 9 / 16;
