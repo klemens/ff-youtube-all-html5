@@ -25,7 +25,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
         html5Button = document.createElement("button");
         html5Button.className = "yt-uix-button start yt-uix-button-default";
         html5Button.textContent = "HTML5";
-        html5Button.title = "Play video using HTML5";
+        html5Button.title = "Force fallback solution";
         html5Button.style.paddingLeft = "30px";
         html5Button.style.backgroundImage = "url(" + options.buttonImageUrl + ")";
         html5Button.style.backgroundRepeat = "no-repeat";
@@ -143,20 +143,12 @@ function youtubeHtml5ButtonLoader(startOptions) {
         var url = getUrlParams();
 
         if(url && url.v) {
-            if(tries == 0) {
-                if(options.settings["yt-loadtype"] == "api") {
-                    insertVideoApi(url.v);
-                } else if(options.settings["yt-loadtype"] == "iframe") {
-                    var insertInto = document.getElementById("player-api-legacy") ||
-                                     document.getElementById("player-api");
-                    insertVideoIframe(url.v, insertInto);
-                }
-            } else if(tries > 0) {
+            if(tries == 0 && options.settings["yt-loadtype"] == "api") {
+                insertVideoApi(url.v);
+            } else {
                 var insertInto = document.getElementById("player-api-legacy") ||
                                  document.getElementById("player-api");
                 insertVideoIframe(url.v, insertInto);
-            } else {
-                return false;
             }
 
             ++tries;
