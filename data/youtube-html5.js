@@ -281,19 +281,36 @@ function youtubeHtml5ButtonLoader(startOptions) {
     }
 
     function insertVideoIframe(video, insertInto) {
+        if(!insertInto) {
+            return;
+        }
+
         var player = document.createElement("iframe");
 
-        player.src = "https://www.youtube.com/embed/" + video + "?rel=0&autoplay=1";
+        player.src = location.protocol + "//www.youtube.com/embed/" + video + "?rel=0&autoplay=1";
+        player.id = "fallbackIframe";
         player.width = "100%";
         player.height = "100%";
         player.setAttribute('allowfullscreen', '');
 
-        if(insertInto) {
-            // Remove all childern before inserting iframe
-            while(insertInto.hasChildNodes()) {
-                insertInto.removeChild(insertInto.firstChild);
-            }
-            insertInto.appendChild(player);
+        // Remove all childern before inserting iframe
+        while(insertInto.hasChildNodes()) {
+            insertInto.removeChild(insertInto.firstChild);
+        }
+        insertInto.appendChild(player);
+
+        // handle iframe to video quality script
+        dispatchEvent("registerIframe", { id: player.id });
+
+        // listen for iframe video end and proceed to next video on playlist sites
+        var autoplayButton = document.getElementById("watch7-playlist-bar-autoplay-button");
+        var nextVideoButton = document.getElementById("watch7-playlist-bar-next-button");
+        if(that.isPlaylistSite()) {
+            document.documentElement.addEventListener("iframeStopped", function(event) {
+                if(autoplayButton.classList.contains("yt-uix-button-toggled")) {
+                    nextVideoButton.click();
+                }
+            });
         }
     }
 
@@ -304,6 +321,12 @@ function youtubeHtml5ButtonLoader(startOptions) {
             params[key] = value;
         });
         return params;
+    }
+
+    function dispatchEvent(type, detail) {
+        var event = document.createEvent('CustomEvent');
+        event.initCustomEvent(type, true, true, detail);
+        document.documentElement.dispatchEvent(event);
     }
 }
 
