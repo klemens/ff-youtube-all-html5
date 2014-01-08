@@ -47,6 +47,7 @@ var ensureYTParameters = function(event) {
     }
     for(var annotation of document.querySelectorAll(".video-annotations")) {
         annotation.style.transform = "scale(" + scale + ")";
+        annotation.style.transformOrigin = "0 0";
     }
 }
 
