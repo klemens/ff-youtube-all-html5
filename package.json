@@ -66,6 +66,12 @@
       "type": "bool",
       "value": false
   }, {
+      "name": "yt-start-paused",
+      "title": "Start videos paused on YouTube",
+      "description": "This pauses videos when they are loaded",
+      "type": "bool",
+      "value": false
+  }, {
       "name": "yt-loadtype",
       "title": "YouTube video loading method",
       "description": "Note: The button always uses the API method on first click and the embedding method on second click.",
