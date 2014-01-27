@@ -22,9 +22,13 @@ var ensureYTParameters = function(event) {
                 player.wrappedJSObject.setPlaybackQuality(self.options.settings["yt-video-quality"]);
             }
             player.wrappedJSObject.pauseVideo();
-            setTimeout(function() {
-                player.wrappedJSObject.playVideo();
-            }, 200);
+
+            // let the user play the video if yt-start-paused is true
+            if(!self.options.settings["yt-start-paused"]) {
+                setTimeout(function() {
+                    player.wrappedJSObject.playVideo();
+                }, 200);
+            }
         }
     }
 
