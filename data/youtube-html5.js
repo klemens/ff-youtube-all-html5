@@ -17,9 +17,6 @@ function youtubeHtml5ButtonLoader(startOptions) {
         // create outer span
         var buttonGroup = document.createElement("span");
         buttonGroup.className = "yt-uix-button-group";
-        buttonGroup.style.marginLeft = "25px";
-        buttonGroup.style.marginTop = "3px";
-        buttonGroup.style.cssFloat = "right";
 
         // create the html5 button
         html5Button = document.createElement("button");
@@ -81,6 +78,18 @@ function youtubeHtml5ButtonLoader(startOptions) {
             self.port.emit("openSettings", "");
         });
         li.appendChild(span);
+
+        // new youtube design (02-2014, similar to 09-2013)
+        var player = document.getElementById("player");
+        if(player && 0 == parseInt(window.getComputedStyle(player)
+                                         .getPropertyValue('padding-left'))) {
+            insertInto = document.getElementById("yt-masthead-user");
+            buttonGroup.style.marginRight = "15px";
+        } else {
+            buttonGroup.style.marginLeft = "25px";
+            buttonGroup.style.marginTop = "3px";
+            buttonGroup.style.cssFloat = "right";
+        }
 
         // insert into dom
         insertInto.insertBefore(buttonGroup, insertInto.firstChild);
@@ -257,13 +266,16 @@ function youtubeHtml5ButtonLoader(startOptions) {
         var sidebar = document.getElementById("watch7-sidebar");
         if(sidebar) {
             sidebar.style.transition = "none";
-            sidebar.style.marginTop = "5px";
+            sidebar.style.marginTop = "0px";
         }
 
-        // new youtube design (09-2013)
+        // new youtube design (09-2013, 02-2014)
         if(0 == leftPadding) {
             player.style.width = (height * 16 / 9) + "px";
-            player.style.marginBottom = "28px";
+            player.style.marginBottom = "10px";
+            player.style.maxWidth = "none";
+            playerApi.style.cssFloat = "none";
+            playerApi.style.margin = "auto";
         }
 
         playerApi.style.width = (height * 16 / 9) + "px";
