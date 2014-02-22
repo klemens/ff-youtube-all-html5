@@ -9,7 +9,9 @@ function youtubeHtml5ButtonLoader(startOptions) {
     var that = this;
 
     this.installButton = function() {
-        var insertInto = document.getElementById("yt-masthead-content");
+        var insertInto = document.getElementById("yt-masthead-user")
+                         || document.getElementById("yt-masthead-signin")
+                         || document.getElementById("yt-masthead-content");
         if(!insertInto) {
             return;
         }
@@ -17,10 +19,11 @@ function youtubeHtml5ButtonLoader(startOptions) {
         // create outer span
         var buttonGroup = document.createElement("span");
         buttonGroup.className = "yt-uix-button-group";
+        buttonGroup.style.marginRight = "15px";
 
         // create the html5 button
         html5Button = document.createElement("button");
-        html5Button.className = "yt-uix-button start yt-uix-button-default";
+        html5Button.className = "yt-uix-button yt-uix-button-default";
         html5Button.textContent = "HTML5";
         html5Button.title = "Force fallback solution";
         html5Button.style.paddingLeft = "30px";
@@ -35,7 +38,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
         // create sizes menu
         var sizeMenu = document.createElement("button");
-        sizeMenu.className = "end flip yt-uix-button yt-uix-button-default yt-uix-button-size-default yt-uix-button-empty"
+        sizeMenu.className = "flip yt-uix-button yt-uix-button-default yt-uix-button-size-default yt-uix-button-empty"
         buttonGroup.appendChild(sizeMenu);
 
         var arrowImage = document.createElement("img");
@@ -44,7 +47,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
         sizeMenu.appendChild(arrowImage);
 
         var sizeList = document.createElement("ol");
-        sizeList.className = "yt-uix-button-menu hid";
+        sizeList.className = "appbar-menu yt-uix-button-menu hid";
         sizeMenu.appendChild(sizeList);
 
         // Insert values into the list
@@ -78,18 +81,6 @@ function youtubeHtml5ButtonLoader(startOptions) {
             self.port.emit("openSettings", "");
         });
         li.appendChild(span);
-
-        // new youtube design (02-2014, similar to 09-2013)
-        var player = document.getElementById("player");
-        if(player && 0 == parseInt(window.getComputedStyle(player)
-                                         .getPropertyValue('padding-left'))) {
-            insertInto = document.getElementById("yt-masthead-user");
-            buttonGroup.style.marginRight = "15px";
-        } else {
-            buttonGroup.style.marginLeft = "25px";
-            buttonGroup.style.marginTop = "3px";
-            buttonGroup.style.cssFloat = "right";
-        }
 
         // insert into dom
         insertInto.insertBefore(buttonGroup, insertInto.firstChild);
@@ -269,15 +260,11 @@ function youtubeHtml5ButtonLoader(startOptions) {
             sidebar.style.marginTop = "0px";
         }
 
-        // new youtube design (09-2013, 02-2014)
-        if(0 == leftPadding) {
-            player.style.width = (height * 16 / 9) + "px";
-            player.style.marginBottom = "10px";
-            player.style.maxWidth = "none";
-            playerApi.style.cssFloat = "none";
-            playerApi.style.margin = "auto";
-        }
-
+        player.style.width = (height * 16 / 9) + "px";
+        player.style.marginBottom = "10px";
+        player.style.maxWidth = "none";
+        playerApi.style.cssFloat = "none";
+        playerApi.style.margin = "auto";
         playerApi.style.width = (height * 16 / 9) + "px";
         playerApi.style.height = (height + 30) + "px"; // 30px for nav
     }
@@ -315,8 +302,8 @@ function youtubeHtml5ButtonLoader(startOptions) {
         dispatchEvent("registerIframe", { id: player.id });
 
         // listen for iframe video end and proceed to next video on playlist sites
-        var autoplayButton = document.getElementById("watch7-playlist-bar-autoplay-button");
-        var nextVideoButton = document.getElementById("watch7-playlist-bar-next-button");
+        var autoplayButton = document.querySelector(".toggle-autoplay");
+        var nextVideoButton = document.querySelector(".next-playlist-list-item");
         if(that.isPlaylistSite()) {
             document.documentElement.addEventListener("iframeStopped", function(event) {
                 if(autoplayButton.classList.contains("yt-uix-button-toggled")) {
