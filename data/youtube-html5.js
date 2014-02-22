@@ -217,10 +217,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
     }
 
     this.autoSizeVideo = function() {
-        // only resize normal videos (no playlist videos)
-        if(!that.isPlaylistSite()) {
-            resizePlayer(options.settings["resolution"]);
-        }
+        resizePlayer(options.settings["resolution"]);
     }
 
 
