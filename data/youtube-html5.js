@@ -351,15 +351,10 @@ if(youtubeHtml5Button.isVideoSite()) {
 // check if spf is enabled
 if(window.wrappedJSObject.ytspf && window.wrappedJSObject.ytspf.enabled) {
     if(self.options.settings["yt-disable-spf"]) {
-        // disable spf feature by overriding pushState
-        window.history.wrappedJSObject.__proto__.pushState = function(state, title, url) {
-            var progressBar = window.document.getElementById("progress");
-            if(progressBar) {
-                // remove spf progress bar
-                progressBar.parentNode.removeChild(progressBar);
-            }
-            // redirect to spf destination
-            window.location.href = url;
+        // disbale spf by disposing the spf object
+        // inspired by YePpHa's YouTubeCenter (https://github.com/YePpHa/YouTubeCenter)
+        if(window.wrappedJSObject.spf && window.wrappedJSObject.spf.dispose) {
+            window.wrappedJSObject.spf.dispose();
         }
     } else {
         // listen for spf page changes, update button (and start video)
