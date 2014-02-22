@@ -237,7 +237,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
         // try to calculate the heigt based on site width
         if(height < 0) {
-            var availableWidth = window.innerWidth - leftPadding;
+            var availableWidth = document.body.clientWidth - leftPadding;
 
             var sizesReverse = videoSizes.slice().reverse();
             for(var i in sizesReverse) {
