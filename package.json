@@ -6,9 +6,10 @@
   "author": "Klemens Schölhorn",
   "icon": "logo/logo32.png",
   "icon64": "logo/logo64.png",
-  "permissions": { "private-browsing": true },
+  "permissions": { "private-browsing": true,
+                   "unsafe-content-script": true },
   "license": "GPLv3",
-  "version": "2.1.1",
+  "version": "2.1.1.1",
   "preferences": [{
       "name": "resolution",
       "title": "YouTube video size",
