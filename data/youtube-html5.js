@@ -255,6 +255,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
         if(sidebar) {
             sidebar.style.transition = "none";
             sidebar.style.marginTop = "0px";
+            sidebar.style.top = "0px";
         }
 
         player.style.width = (height * 16 / 9) + "px";
