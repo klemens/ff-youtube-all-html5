@@ -57,7 +57,7 @@
   }, {
       "name": "yt-disable-flash",
       "title": "Disable Flash on YouTube",
-      "description": "Use this if you want to keep Flash enabled but use the HTML5 Player on YouTube.",
+      "description": "If you want to keep Flash enabled but use HTML5 on YouTube (and embedded videos).",
       "type": "bool",
       "value": false
   }, {
