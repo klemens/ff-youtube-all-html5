@@ -57,7 +57,7 @@
   }, {
       "name": "yt-disable-flash",
       "title": "Disable Flash on YouTube",
-      "description": "Use this if you want to keep Flash enabled but use the HTML5 Player on YouTube.",
+      "description": "If you want to keep Flash enabled but use HTML5 on YouTube (and embedded videos).",
       "type": "bool",
       "value": false
   }, {
@@ -72,12 +72,6 @@
       "description": "This pauses videos when they are loaded",
       "type": "bool",
       "value": false
-  }, {
-      "name": "yt-embeded",
-      "title": "Force HTML5 on embedded video",
-      "description": "This will try to serve HTML5 video also in embedded YouTube frames.",
-      "type": "bool",
-      "value": true
   }, {
       "name": "yt-loadtype",
       "title": "YouTube video loading method",
