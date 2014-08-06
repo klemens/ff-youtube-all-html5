@@ -9,7 +9,7 @@
   "permissions": { "private-browsing": true,
                    "unsafe-content-script": true },
   "license": "GPLv3",
-  "version": "2.1.3",
+  "version": "2.2.0beta1",
   "preferences": [{
       "name": "resolution",
       "title": "YouTube video size",
