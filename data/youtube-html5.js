@@ -1,6 +1,5 @@
 function youtubeHtml5ButtonLoader(startOptions) {
     var options = startOptions;
-    var playerSizes = [360, 480, 720, 1080, 1440];
 
     var html5Button = null;
     var observer = null;
@@ -51,15 +50,15 @@ function youtubeHtml5ButtonLoader(startOptions) {
         sizeMenu.appendChild(sizeList);
 
         // Insert values into the list
-        for(var i in playerSizes) {
+        for(var i in options.playerSizes) {
             var li = document.createElement("li");
             sizeList.appendChild(li);
 
             var span = document.createElement("span");
             span.className = "yt-uix-button-menu-item";
             span.style.padding = "0 1em";
-            span.textContent = "Resize to " + playerSizes[i] + "p";
-            span.dataset.playersize = playerSizes[i];
+            span.textContent = "Resize to " + options.playerSizes[i] + "p";
+            span.dataset.playersize = options.playerSizes[i];
             span.addEventListener("click", function(event) {
                 resizePlayer(event.target.dataset.playersize);
             });
@@ -239,7 +238,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
         if(height < 0) {
             var availableWidth = document.body.clientWidth - leftPadding;
 
-            var sizesReverse = playerSizes.slice().reverse();
+            var sizesReverse = options.playerSizes.slice().reverse();
             for(var i in sizesReverse) {
                 if(availableWidth >= (sizesReverse[i] * 16 / 9)) {
                     height = sizesReverse[i];
