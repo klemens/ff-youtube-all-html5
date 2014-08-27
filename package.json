@@ -39,9 +39,9 @@
           "value": "1440"
       }]
   }, {
-      "name": "yt-video-quality",
-      "title": "YouTube video quality",
-      "description": "Choose the video quality to load.\n\"Auto\" chooses the right quality for the size selected above.",
+      "name": "yt-video-resolution",
+      "title": "YouTube video resolution",
+      "description": "Choose the video quality to load.\n\"Auto\" chooses the right resolution for the size selected above.",
       "type": "menulist",
       "value": "auto",
       "options" : [{
@@ -49,10 +49,10 @@
           "value": "auto"
       }, {
           "label": "360p",
-          "value": "medium"
+          "value": "640x360"
       }, {
           "label": "720p",
-          "value": "hd720"
+          "value": "1280x720"
       }]
   }, {
       "name": "yt-disable-spf",

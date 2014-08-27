@@ -1,5 +1,59 @@
 var uw = window.wrappedJSObject;
 
+// contains some helper functions to modify the player configuration
+var youtubeConfig = {
+    findResolution: function(playerSize) {
+        if(!playerSize) {
+            return null;
+        } else if(playerSize < 0) {
+            var sizesReverse = self.options.playerSizes.slice().reverse();
+            for(var i in sizesReverse) {
+                if(document.body.clientWidth >= (sizesReverse[i] * 16 / 9)) {
+                    playerSize = sizesReverse[i];
+                    break;
+                }
+            }
+            if(playerSize < 0) {
+                return null;
+            }
+        }
+
+        return "" + (playerSize * 16 / 9) + "x" + playerSize;
+    },
+    resolutionToQuality: function(resolution) {
+        switch(resolution) {
+            case "640x360": return "medium";
+            case "1280x720": return "hd720";
+            default: return "auto";
+        }
+    }
+};
+
+// modify the player config directly when it is first set (usually through
+// a script tag in the html body); this works because the player is created
+// afterwards and uses the modified configuration
+// inspired by YouTubeCenter (https://github.com/YePpHa/YouTubeCenter)
+uw.ytplayer = {};
+Object.defineProperty(uw.ytplayer, "config", {
+    get: function() {
+        return youtubeConfig._config;
+    },
+    set: function(config) {
+        var resolution = null;
+        if(self.options.settings["yt-video-resolution"] === "auto") {
+            resolution = youtubeConfig.findResolution(self.options.settings["yt-player-size"]);
+        } else {
+            resolution = self.options.settings["yt-video-resolution"];
+        }
+        if(resolution) {
+            config.args.video_container_override = resolution;
+            config.args.suggestedQuality = youtubeConfig.resolutionToQuality(resolution);
+        }
+
+        youtubeConfig._config = config;
+    }
+});
+
 // This is called when the youtube player has finished loading
 // and its API can be used safely
 uw.onYouTubePlayerReady = function() {
@@ -18,28 +72,6 @@ uw.onYouTubePlayerReady = function() {
 
 // function which sets the quality, size and volume of the video to the right values
 var ensureYTParameters = function(event) {
-    // run this part of the function only on the beginning of the video
-    if(!ensureYTParameters.runOnce) {
-        var player = window.document.getElementById('movie_player');
-        if(player && player.wrappedJSObject) {
-            ensureYTParameters.runOnce = true;
-
-            // set desired video quality and pause/play the video to enforce it
-            if("auto" == self.options.settings["yt-video-quality"]) {
-                var height = parseInt(window.getComputedStyle(player).width) * 9 / 16;
-                if(height >= 720) {
-                    player.wrappedJSObject.setPlaybackQuality("hd720");
-                } // else: medium is already the default
-            } else {
-                player.wrappedJSObject.setPlaybackQuality(self.options.settings["yt-video-quality"]);
-            }
-            player.wrappedJSObject.pauseVideo();
-            setTimeout(function() {
-                player.wrappedJSObject.playVideo();
-            }, 200);
-        }
-    }
-
     // continually maximize video size, because youtube changes this eg. when
     // switching to fullscreen and back or using the player size button
     if(event.target.style) {
