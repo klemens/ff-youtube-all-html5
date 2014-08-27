@@ -1,3 +1,21 @@
+var uw = window.wrappedJSObject;
+
+// This is called when the youtube player has finished loading
+// and its API can be used safely
+uw.onYouTubePlayerReady = function() {
+    var player = document.querySelector("#movie_player").wrappedJSObject;
+
+    // set volume to 100% to work aroung a youtube bug which reduces
+    // the volume without user interaction
+    if(self.options.settings["yt-fix-volume"]) {
+        player.setVolume(100);
+    }
+
+    if(self.options.settings["yt-start-paused"]) {
+        player.pauseVideo();
+    }
+}
+
 // function which sets the quality, size and volume of the video to the right values
 var ensureYTParameters = function(event) {
     // run this part of the function only on the beginning of the video
@@ -5,12 +23,6 @@ var ensureYTParameters = function(event) {
         var player = window.document.getElementById('movie_player');
         if(player && player.wrappedJSObject) {
             ensureYTParameters.runOnce = true;
-
-            // set volume to 100% to work aroung a youtube bug which reduces
-            // the volume without user interaction
-            if(self.options.settings["yt-fix-volume"]) {
-                player.wrappedJSObject.setVolume(100);
-            }
 
             // set desired video quality and pause/play the video to enforce it
             if("auto" == self.options.settings["yt-video-quality"]) {
@@ -22,13 +34,9 @@ var ensureYTParameters = function(event) {
                 player.wrappedJSObject.setPlaybackQuality(self.options.settings["yt-video-quality"]);
             }
             player.wrappedJSObject.pauseVideo();
-
-            // let the user play the video if yt-start-paused is true
-            if(!self.options.settings["yt-start-paused"]) {
-                setTimeout(function() {
-                    player.wrappedJSObject.playVideo();
-                }, 200);
-            }
+            setTimeout(function() {
+                player.wrappedJSObject.playVideo();
+            }, 200);
         }
     }
 
