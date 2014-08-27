@@ -9,7 +9,7 @@
   "permissions": { "private-browsing": true,
                    "unsafe-content-script": true },
   "license": "GPLv3",
-  "version": "2.2.0beta1",
+  "version": "2.2.0beta2",
   "preferences": [{
       "name": "yt-player-size",
       "title": "YouTube player size",
