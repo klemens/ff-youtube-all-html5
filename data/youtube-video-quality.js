@@ -2,6 +2,14 @@ var uw = window.wrappedJSObject;
 
 // contains some helper functions to modify the player configuration
 var youtubeConfig = {
+    removeExperiment: function(config, experiment) {
+        var experiments = config.args.fexp.split(",");
+        var experimentIndex = experiments.indexOf(experiment);
+        if(experimentIndex !== -1) {
+            experiments.splice(experimentIndex, 1);
+        }
+        config.args.fexp = experiments.join(",");
+    },
     findResolution: function(playerSize) {
         if(!playerSize) {
             return null;
@@ -39,6 +47,8 @@ Object.defineProperty(uw.ytplayer, "config", {
         return youtubeConfig._config;
     },
     set: function(config) {
+        youtubeConfig.removeExperiment(config, "931983");
+
         var resolution = null;
         if(self.options.settings["yt-video-resolution"] === "auto") {
             resolution = youtubeConfig.findResolution(self.options.settings["yt-player-size"]);
@@ -69,34 +79,6 @@ uw.onYouTubePlayerReady = function() {
         player.pauseVideo();
     }
 }
-
-// function which sets the quality, size and volume of the video to the right values
-var ensureYTParameters = function(event) {
-    // continually maximize video size, because youtube changes this eg. when
-    // switching to fullscreen and back or using the player size button
-    if(event.target.style) {
-        event.target.style.width = "100%";
-        event.target.style.height = "100%";
-        event.target.style.top = "0";
-        event.target.style.left = "0";
-    }
-
-    // scale annotations, because they are not scaled automatically (see above);
-    // however, they are scaled automatically in fullscreen mode
-    var scale = 1;
-    var fullscreenElement = document.mozFullScreenElement || document.fullscreenElement;
-    if(!fullscreenElement) {
-        scale = parseInt(document.getElementById("player-api").style.width)
-                / parseInt(document.querySelector(".html5-video-content").style.width);
-    }
-    for(var annotation of document.querySelectorAll(".video-annotations")) {
-        annotation.style.transform = "scale(" + scale + ")";
-        annotation.style.transformOrigin = "0 0";
-    }
-}
-
-// register function to run when video is running
-document.addEventListener("timeupdate", ensureYTParameters, true);
 
 // register function to let the main script register inserted iframes
 document.documentElement.addEventListener("registerIframe", function(event) {
