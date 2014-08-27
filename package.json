@@ -11,9 +11,9 @@
   "license": "GPLv3",
   "version": "2.2.0beta1",
   "preferences": [{
-      "name": "resolution",
-      "title": "YouTube video size",
-      "description": "Automatically change the size of YouTube videos.",
+      "name": "yt-player-size",
+      "title": "YouTube player size",
+      "description": "Automatically change the size of the YouTube player.",
       "type": "menulist",
       "value": 0,
       "options" : [{
@@ -23,6 +23,9 @@
           "label": "Calculate from window size",
           "value": "-1"
       }, {
+          "label": "360p",
+          "value": "360"
+      }, {
           "label": "480p",
           "value": "480"
       }, {
@@ -31,6 +34,9 @@
       }, {
           "label": "1080p",
           "value": "1080"
+      }, {
+          "label": "1440p",
+          "value": "1440"
       }]
   }, {
       "name": "yt-video-quality",
