@@ -22,10 +22,9 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
         // create the html5 button
         html5Button = document.createElement("button");
-        html5Button.className = "yt-uix-button yt-uix-button-default";
-        html5Button.textContent = "HTML5";
-        html5Button.title = "Force fallback solution";
-        html5Button.style.paddingLeft = "30px";
+        html5Button.className = "yt-uix-button yt-uix-button-default yt-uix-tooltip";
+        html5Button.dataset.tooltipText = "Force fallback solution<br />(May work if the default method fails)";
+        html5Button.style.width = "32px";
         html5Button.style.backgroundImage = "url(" + options.buttonImageUrl + ")";
         html5Button.style.backgroundRepeat = "no-repeat";
         html5Button.style.backgroundPosition = "5px 50%";
@@ -37,7 +36,8 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
         // create sizes menu
         var sizeMenu = document.createElement("button");
-        sizeMenu.className = "flip yt-uix-button yt-uix-button-default yt-uix-button-size-default yt-uix-button-empty"
+        sizeMenu.className = "flip yt-uix-button yt-uix-button-default yt-uix-button-size-default yt-uix-button-empty";
+        sizeMenu.style.padding = "0 5px";
         buttonGroup.appendChild(sizeMenu);
 
         var arrowImage = document.createElement("img");
@@ -46,7 +46,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
         sizeMenu.appendChild(arrowImage);
 
         var sizeList = document.createElement("ol");
-        sizeList.className = "appbar-menu yt-uix-button-menu hid";
+        sizeList.className = "yt-uix-button-menu hid";
         sizeMenu.appendChild(sizeList);
 
         // Insert values into the list
@@ -150,9 +150,9 @@ function youtubeHtml5ButtonLoader(startOptions) {
         if(html5Button) {
             html5Button.classList.remove("yt-uix-button-toggled");
         }
-        
+
         tries = 0;
-        
+
         if(observer) {
             observer.disconnect();
             disconnect = null;
