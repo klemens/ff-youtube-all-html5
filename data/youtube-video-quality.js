@@ -17,8 +17,8 @@ runInPageContext(function(params) {
         set: function(config) {
             var resolution = null;
             if(_ytallhtml5.options.settings["yt-video-resolution"] === "auto") {
-                if(_ytallhtml5.options.settings["yt-player-size"] !== 0) {
-                    resolution = _ytallhtml5.findBestResolution(_ytallhtml5.options.settings["yt-player-size"]);
+                if(_ytallhtml5.options.settings["yt-player-height"] !== 0) {
+                    resolution = _ytallhtml5.findBestResolution(_ytallhtml5.options.settings["yt-player-height"]);
                 }
             } else {
                 resolution = _ytallhtml5.options.settings["yt-video-resolution"];
