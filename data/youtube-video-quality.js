@@ -112,3 +112,34 @@ document.documentElement.addEventListener("registerIframe", function(event) {
         iframe.contentDocument.addEventListener("timeupdate", handleIframe, true);
     });
 }, false);
+
+
+/**
+ * This is needed because since firefox 33 it is no longer allowed for
+ * content scripts to export complex objects to the page context (eg properties).
+ * Because the function is serialized, references do not work. To pass static
+ * data to the exported function, use the second parameter. (supports only
+ * objects with basic types, not functions etc.)
+ * Inspired by Rob W, http://stackoverflow.com/a/9517879
+ */
+function runInPageContext(func, data) {
+    if(!(func instanceof Function) || func.name != "") {
+        throw "Please use an anonymous function";
+    }
+
+    var serializedData = "";
+    if(data instanceof Object) {
+        serializedData += "JSON.parse(\"";
+        serializedData += JSON.stringify(data).replace("\\", "\\\\", "g")
+                                              .replace("\"", "\\\"", "g");
+        serializedData += "\")";
+    }
+
+    var serializedFunc = "(" + func.toSource() + ")(" + serializedData + ")";
+    var script = document.createElement('script');
+    script.textContent = serializedFunc;
+
+    var root = document.documentElement;
+    root.appendChild(script); // script is run here ...
+    root.removeChild(script); // ... so we can remove the tag directly afterwards
+}
