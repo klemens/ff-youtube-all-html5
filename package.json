@@ -51,8 +51,20 @@
           "label": "360p",
           "value": "640x360"
       }, {
+          "label": "480p (MSE)",
+          "value": "853x480"
+      }, {
           "label": "720p",
           "value": "1280x720"
+      }, {
+          "label": "1080p (MSE)",
+          "value": "1920x1080"
+      }, {
+          "label": "1440p (MSE)",
+          "value": "2560x1440"
+      }, {
+          "label": "2160p (MSE)",
+          "value": "3840x2160"
       }]
   }, {
       "name": "yt-disable-spf",
