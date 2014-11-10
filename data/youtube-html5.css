@@ -2,3 +2,21 @@
 .yt-alert.yt-alert-default.yt-alert-error.yt-alert-player {
     display: none !important;
 }
+
+/**
+ * Fix video size issues
+ * Thanks to Yonezpt!
+ * https://github.com/YePpHa/YouTubeCenter/issues/1083#issuecomment-60902245
+ **/
+html:not([data-player-size="fullscreen"]) div#player-api video,
+html:not([data-player-size="fullscreen"]) div#player-api div.html5-video-content {
+    min-width: 100%;
+    min-height: 100%;
+    left: 0 !important; /* Needed for 4:3 videos */
+}
+div#player-api .ended-mode video,
+div#player-api .ended-mode html5-video-content {
+    /* video is hidden at the end, so do not force size anymore */
+    min-height: unset !important;
+    min-width: unset !important;
+}
