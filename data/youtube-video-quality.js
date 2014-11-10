@@ -1,72 +1,42 @@
-var uw = window.wrappedJSObject;
+// Object that contains all functions and data that must be available to the page
+var _ytallhtml5 = createObjectIn(unsafeWindow, {defineAs: "_ytallhtml5"});
 
-// contains some helper functions to modify the player configuration
-var youtubeConfig = {
-    removeExperiment: function(config, experiment) {
-        var experiments = config.args.fexp.split(",");
-        var experimentIndex = experiments.indexOf(experiment);
-        if(experimentIndex !== -1) {
-            experiments.splice(experimentIndex, 1);
-        }
-        config.args.fexp = experiments.join(",");
-    },
-    findResolution: function(playerSize) {
-        if(!playerSize) {
-            return null;
-        } else if(playerSize < 0) {
-            var sizesReverse = self.options.playerSizes.slice().reverse();
-            for(var i in sizesReverse) {
-                if(document.body.clientWidth >= (sizesReverse[i] * 16 / 9)) {
-                    playerSize = sizesReverse[i];
-                    break;
+// Make config options available
+_ytallhtml5.options = cloneInto(self.options, unsafeWindow);
+
+
+/**
+ * Hijack the youtube config variable so we can modify it instanly upon setting
+ */
+runInPageContext(function(params) {
+    window.ytplayer = {};
+    Object.defineProperty(window.ytplayer, "config", {
+        get: function() {
+            return window._ytallhtml5.config;
+        },
+        set: function(config) {
+            var resolution = null;
+            if(_ytallhtml5.options.settings["yt-video-resolution"] === "auto") {
+                if(_ytallhtml5.options.settings["yt-player-size"] !== 0) {
+                    resolution = _ytallhtml5.findBestResolution(_ytallhtml5.options.settings["yt-player-size"]);
                 }
+            } else {
+                resolution = _ytallhtml5.options.settings["yt-video-resolution"];
             }
-            if(playerSize < 0) {
-                return null;
+            if(resolution) {
+                config.args.video_container_override = resolution;
+                // suggestedQuality may not work anymore
+                config.args.suggestedQuality = _ytallhtml5.resolutionToYTQuality(resolution);
             }
-        }
 
-        return "" + (playerSize * 16 / 9) + "x" + playerSize;
-    },
-    resolutionToQuality: function(resolution) {
-        switch(resolution) {
-            case "640x360": return "medium";
-            case "1280x720": return "hd720";
-            default: return "auto";
+            window._ytallhtml5.config = config;
         }
-    }
-};
-
-// modify the player config directly when it is first set (usually through
-// a script tag in the html body); this works because the player is created
-// afterwards and uses the modified configuration
-// inspired by YouTubeCenter (https://github.com/YePpHa/YouTubeCenter)
-uw.ytplayer = {};
-Object.defineProperty(uw.ytplayer, "config", {
-    get: function() {
-        return youtubeConfig._config;
-    },
-    set: function(config) {
-        youtubeConfig.removeExperiment(config, "931983");
-
-        var resolution = null;
-        if(self.options.settings["yt-video-resolution"] === "auto") {
-            resolution = youtubeConfig.findResolution(self.options.settings["yt-player-size"]);
-        } else {
-            resolution = self.options.settings["yt-video-resolution"];
-        }
-        if(resolution) {
-            config.args.video_container_override = resolution;
-            config.args.suggestedQuality = youtubeConfig.resolutionToQuality(resolution);
-        }
-
-        youtubeConfig._config = config;
-    }
-});
+    });
+}, {});
 
 // This is called when the youtube player has finished loading
 // and its API can be used safely
-uw.onYouTubePlayerReady = function() {
+window.wrappedJSObject.onYouTubePlayerReady = function() {
     var player = document.querySelector("#movie_player").wrappedJSObject;
 
     // set volume to 100% to work aroung a youtube bug which reduces
@@ -113,6 +83,41 @@ document.documentElement.addEventListener("registerIframe", function(event) {
     });
 }, false);
 
+
+/**
+ * Function that returns the 16:9 video resolution for a given player height.
+ * Tries to calculate it based on the window size if playerHeight < 0.
+ */
+exportFunction(function(playerHeight) { // findBestResolution
+    if(playerHeight < 0) {
+        var sizesReverse = _ytallhtml5.options.playerHeights.slice().reverse();
+        for(var i in sizesReverse) {
+            if(document.body.clientWidth >= (sizesReverse[i] * 16 / 9)) {
+                playerHeight = sizesReverse[i];
+                break;
+            }
+        }
+        if(playerHeight < 0) {
+            return null;
+        }
+    }
+
+    return "" + (playerHeight * 16 / 9) + "x" + playerHeight;
+}, _ytallhtml5, {defineAs: "findBestResolution"});
+
+/**
+ * Function that converts a given resolution to the youtube representation.
+ */
+exportFunction(function(resolution) { // resolutionToYTQuality
+    switch(resolution) {
+        case "640x360": return "medium";
+        case "853x480": return "large";
+        case "1280x720": return "hd720";
+        case "1920x1080": return "hd1080";
+        case "2560x1440": return "highres";
+        default: return "auto";
+    }
+}, _ytallhtml5, {defineAs: "resolutionToYTQuality"});
 
 /**
  * This is needed because since firefox 33 it is no longer allowed for
