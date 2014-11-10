@@ -46,7 +46,20 @@ window.wrappedJSObject.onYouTubePlayerReady = function() {
     }
 
     if(self.options.settings["yt-start-paused"]) {
-        player.pauseVideo();
+        var pauseVideo = function() {
+            player.pauseVideo();
+        }
+        // sometimes the first call does not work, so we pause a second time
+        pauseVideo();
+        window.setTimeout(pauseVideo, 100);
+
+        var fixTitle = function() {
+            window.document.title = window.document.title.replace("▶ ", "");
+        }
+        // youtube changes the title after this function is called, so we simply guess;
+        // more than 1s is problematic because the user might start the video manually before
+        window.setTimeout(fixTitle, 300);
+        window.setTimeout(fixTitle, 1000);
     }
 }
 
