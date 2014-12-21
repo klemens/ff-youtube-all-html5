@@ -61,6 +61,21 @@ window.wrappedJSObject.onYouTubePlayerReady = function() {
         window.setTimeout(fixTitle, 300);
         window.setTimeout(fixTitle, 1000);
     }
+    
+    // seek to time given in HTML-anchor
+    // workaround for noscript
+    var hash = window.location.hash.substring(1);
+    var timeparams = hash.match(/^t=([0-9]*h)?([0-9]*m)?([0-9]*)s?$/i);
+    for(i=1; i<4; i++) { timeparams[i] = (typeof timeparams[i] === 'undefined') ? 0 : parseInt(timeparams[i]); }
+
+    if( timeparams[0] ) {
+        var seekToSeconds = 3600*timeparams[1]+60*timeparams[2]+timeparams[3];
+        var seekTo = function () {
+            player.seekTo(seekToSeconds, true); //n_seconds, skipahead=true
+        }
+        window.setTimeout(seekTo, 300);
+        window.setTimeout(seekTo, 1000);
+    }
 }
 
 // register function to let the main script register inserted iframes
