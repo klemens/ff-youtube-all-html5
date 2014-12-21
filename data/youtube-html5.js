@@ -316,7 +316,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
         window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) {
             params[key] = value;
         });
-	return params;
+        return params;
     }
 
     function dispatchEvent(type, detail) {
