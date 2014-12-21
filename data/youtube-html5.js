@@ -316,14 +316,6 @@ function youtubeHtml5ButtonLoader(startOptions) {
         window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) {
             params[key] = value;
         });
-	
-	/*
-	// parse url-anchors for time (#t=...) separately as they slip through above code
-	var hash = window.location.hash.substring(1);
-	if( /^t=[0-9]*h?[0-9]*m?[0-9]*s?$/.test(hash) ) {
-	    params["t"] = hash.substring(2);
-        }
-	*/
 	return params;
     }
 
