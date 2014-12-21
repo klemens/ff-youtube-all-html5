@@ -68,7 +68,15 @@ window.wrappedJSObject.onYouTubePlayerReady = function() {
     var timeparams = window.location.hash.substring(1).match(/^t=([0-9]*h)?([0-9]*m)?([0-9]*)s?$/i);
     for(i=1; i<4; i++) { timeparams[i] = (typeof timeparams[i] === 'undefined') ? 0 : parseInt(timeparams[i]); }
     if( timeparams[0] ) {
-        player.seekTo(3600*timeparams[1]+60*timeparams[2]+timeparams[3], true); //n_seconds, skipahead=true (ahead of buffer)
+        var seekToSeconds = 3600*timeparams[1]+60*timeparams[2]+timeparams[3];
+        var seekTo = function() {
+            var currentTime = player.getCurrentTime();
+            if( !(currentTime >= seekToSeconds && currentTime <= seekToSeconds+2) ) {
+                player.seekTo(seekToSeconds, true); //n_seconds, skipahead=true (ahead of buffer)
+            }
+        }
+        window.setTimeout(seekTo, 300);
+        window.setTimeout(seekTo, 1000);
     }
 }
 
