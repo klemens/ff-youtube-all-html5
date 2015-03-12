@@ -2,8 +2,6 @@ function youtubeHtml5ButtonLoader(startOptions) {
     var options = startOptions;
 
     var html5Button = null;
-    var observer = null;
-    var tries = 0;
 
     var that = this;
 
@@ -99,45 +97,6 @@ function youtubeHtml5ButtonLoader(startOptions) {
         }
     }
 
-    this.startVideoOnError = function() {
-        var check = function(node) {
-            return (node instanceof HTMLDivElement) &&
-                    node.classList.contains("ytp-error");
-        }
-
-        // check if the error is already shown
-        var error = document.querySelector("#movie_player > .ytp-error");
-        if(error && window.getComputedStyle(error).display != "none") {
-            youtubeHtml5Button.startVideo();
-            return;
-        }
-
-        // otherwise wait for it
-        if(observer == null) {
-            observer = new MutationObserver(function(mutations) {
-                var found = false;
-
-                mutations.forEach(function(mutation) {
-                    found = found || check(mutation.target);
-                    for(var i = 0; i < mutation.addedNodes.length; ++i) {
-                        found = found || check(mutation.addedNodes[i]);
-                    }
-                });
-
-                if(found) {
-                    that.startVideo();
-                    observer.disconnect();
-                }
-            });
-        }
-
-        var observee = document.getElementById("player-legacy") ||
-                       document.getElementById("player");
-        if(observee) {
-            observer.observe(observee, { childList: true, subtree: true });
-        }
-    }
-
     this.isVideoSite = function() {
         return /\/watch.*/.test(window.location.pathname);
     }
@@ -150,28 +109,16 @@ function youtubeHtml5ButtonLoader(startOptions) {
         if(html5Button) {
             html5Button.classList.remove("yt-uix-button-toggled");
         }
-
-        tries = 0;
-
-        if(observer) {
-            observer.disconnect();
-            disconnect = null;
-        }
     }
 
     this.startVideo = function() {
         var url = getUrlParams();
 
         if(url && url.v) {
-            if(tries == 0 && options.settings["yt-loadtype"] == "api") {
-                insertVideoApi(url.v);
-            } else {
-                var insertInto = document.getElementById("player-api-legacy") ||
-                                 document.getElementById("player-api");
-                insertVideoIframe(url.v, insertInto);
-            }
+            var insertInto = document.getElementById("player-api-legacy") ||
+                             document.getElementById("player-api");
+            insertVideoIframe(url.v, insertInto);
 
-            ++tries;
             html5Button.classList.add("yt-uix-button-toggled");
 
             return true;
@@ -266,16 +213,6 @@ function youtubeHtml5ButtonLoader(startOptions) {
         playerApi.style.height = (height + 30) + "px"; // 30px for nav
     }
 
-    function insertVideoApi(video) {
-        var player = window.document.getElementById('movie_player');
-
-        if(player && player.wrappedJSObject && player.wrappedJSObject.loadVideoById) {
-            setTimeout(function() {
-                player.wrappedJSObject.loadVideoById(video);
-            }, 100);
-        }
-    }
-
     function insertVideoIframe(video, insertInto) {
         if(!insertInto) {
             return;
@@ -339,13 +276,6 @@ if(!(window.wrappedJSObject.ytplayer && window.wrappedJSObject.ytplayer.config &
 if(youtubeHtml5Button.isVideoSite()) {
     youtubeHtml5Button.installButton();
     youtubeHtml5Button.autoSizeVideo();
-
-    // autostart if not using the ie method
-    // or on playlist sites, where the ie method does not work
-    if("ie" != self.options.settings["yt-loadtype"]
-       || youtubeHtml5Button.isPlaylistSite()) {
-        youtubeHtml5Button.startVideoOnError();
-    }
 }
 
 // check if spf is enabled
@@ -367,11 +297,6 @@ if(window.wrappedJSObject.ytspf && window.wrappedJSObject.ytspf.enabled) {
                         if(youtubeHtml5Button.isVideoSite()) {
                             youtubeHtml5Button.showButton();
                             youtubeHtml5Button.autoSizeVideo();
-
-                            if("ie" != self.options.settings["yt-loadtype"]
-                               || youtubeHtml5Button.isPlaylistSite()) {
-                                youtubeHtml5Button.startVideoOnError();
-                            }
                         } else {
                             youtubeHtml5Button.hideButton();
                         }

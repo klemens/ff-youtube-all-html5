@@ -87,12 +87,6 @@
       "options": [{
           "value": "ie",
           "label": "Emulate Internet Explorer (default)"
-      }, {
-          "value": "api",
-          "label": "Player API"
-      }, {
-          "value": "iframe",
-          "label": "Embedded player"
       }]
   }]
 }
