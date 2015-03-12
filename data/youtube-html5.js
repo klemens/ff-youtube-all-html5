@@ -200,8 +200,8 @@ function youtubeHtml5ButtonLoader(startOptions) {
         var sidebar = document.getElementById("watch7-sidebar");
         if(sidebar) {
             sidebar.style.transition = "none";
-            sidebar.style.marginTop = "0px";
-            sidebar.style.top = "0px";
+            sidebar.style.marginTop = "10px";
+            sidebar.style.top = "0";
         }
 
         player.style.width = (height * 16 / 9) + "px";
