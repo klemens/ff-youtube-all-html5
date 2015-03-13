@@ -13,44 +13,29 @@ function youtubeHtml5ButtonLoader(startOptions) {
             return;
         }
 
-        // create outer span
-        var buttonGroup = document.createElement("span");
-        buttonGroup.className = "yt-uix-button-group";
-        buttonGroup.style.marginRight = "15px";
-
         // create the html5 button
         html5Button = document.createElement("button");
-        html5Button.className = "yt-uix-button yt-uix-button-default yt-uix-tooltip";
-        html5Button.dataset.tooltipText = "Force fallback solution<br />(May work if the default method fails)";
-        html5Button.style.width = "32px";
+        html5Button.className = "yt-uix-button yt-uix-button-default yt-uix-button-size-default yt-uix-button-empty yt-uix-tooltip";
+        html5Button.dataset.tooltipText = "YouTube ALL HTML5";
         html5Button.style.backgroundImage = "url(" + options.buttonImageUrl + ")";
         html5Button.style.backgroundRepeat = "no-repeat";
         html5Button.style.backgroundPosition = "5px 50%";
-        html5Button.addEventListener("click", function() {
-            that.startVideo();
-            html5Button.blur();
-        });
-        buttonGroup.appendChild(html5Button);
-
-        // create sizes menu
-        var sizeMenu = document.createElement("button");
-        sizeMenu.className = "flip yt-uix-button yt-uix-button-default yt-uix-button-size-default yt-uix-button-empty";
-        sizeMenu.style.padding = "0 5px";
-        buttonGroup.appendChild(sizeMenu);
+        html5Button.style.padding = "0 5px 0 30px";
+        html5Button.style.marginRight = "15px";
 
         var arrowImage = document.createElement("img");
         arrowImage.className = "yt-uix-button-arrow";
         arrowImage.src = "//s.ytimg.com/yts/img/pixel-vfl3z5WfW.gif";
-        sizeMenu.appendChild(arrowImage);
+        html5Button.appendChild(arrowImage);
 
-        var sizeList = document.createElement("ol");
-        sizeList.className = "yt-uix-button-menu hid";
-        sizeMenu.appendChild(sizeList);
+        var menuList = document.createElement("ol");
+        menuList.className = "yt-uix-button-menu hid";
+        html5Button.appendChild(menuList);
 
         // Insert values into the list
         for(var i in options.playerHeights) {
             var li = document.createElement("li");
-            sizeList.appendChild(li);
+            menuList.appendChild(li);
 
             var span = document.createElement("span");
             span.className = "yt-uix-button-menu-item";
@@ -63,10 +48,22 @@ function youtubeHtml5ButtonLoader(startOptions) {
             li.appendChild(span);
         }
 
-        // add settings link
+        // add force playback link
         var li = document.createElement("li");
-        sizeList.appendChild(li);
+        menuList.appendChild(li);
         var span = document.createElement("span");
+        span.className = "yt-uix-button-menu-item";
+        span.style.padding = "0 1em";
+        span.textContent = "Force playback";
+        span.addEventListener("click", function() {
+            that.startVideo();
+        });
+        li.appendChild(span);
+
+        // add settings link
+        li = document.createElement("li");
+        menuList.appendChild(li);
+        span = document.createElement("span");
         span.className = "yt-uix-button-menu-item";
         span.style.padding = "0 1em 0 2.8em";
         span.style.backgroundImage = "url(" + options.settingsImageUrl + ")";
@@ -80,7 +77,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
         li.appendChild(span);
 
         // insert into dom
-        insertInto.insertBefore(buttonGroup, insertInto.firstChild);
+        insertInto.insertBefore(html5Button, insertInto.firstChild);
     }
 
     this.showButton = function() {
@@ -105,12 +102,6 @@ function youtubeHtml5ButtonLoader(startOptions) {
         return !! (getUrlParams().list);
     }
 
-    this.reset = function() {
-        if(html5Button) {
-            html5Button.classList.remove("yt-uix-button-toggled");
-        }
-    }
-
     this.startVideo = function() {
         var url = getUrlParams();
 
@@ -118,8 +109,6 @@ function youtubeHtml5ButtonLoader(startOptions) {
             var insertInto = document.getElementById("player-api-legacy") ||
                              document.getElementById("player-api");
             insertVideoIframe(url.v, insertInto);
-
-            html5Button.classList.add("yt-uix-button-toggled");
 
             return true;
         }
@@ -292,8 +281,6 @@ if(window.wrappedJSObject.ytspf && window.wrappedJSObject.ytspf.enabled) {
             mutations.forEach(function(mutation) {
                 for(var i = 0; i < mutation.removedNodes.length; ++i) {
                     if(mutation.removedNodes[i].id && mutation.removedNodes[i].id == "progress") {
-                        youtubeHtml5Button.reset();
-
                         if(youtubeHtml5Button.isVideoSite()) {
                             youtubeHtml5Button.showButton();
                             youtubeHtml5Button.autoSizeVideo();
