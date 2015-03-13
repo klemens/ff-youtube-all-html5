@@ -13,10 +13,13 @@ html:not([data-player-size="fullscreen"]) div#player-api div.html5-video-content
     min-width: 100%;
     min-height: 100%;
     left: 0 !important; /* Needed for 4:3 videos */
+    top: 0 !important; /* Needed for 21:9 videos */
 }
-div#player-api .ended-mode video,
-div#player-api .ended-mode html5-video-content {
+html:not([data-player-size="fullscreen"]) div#player-api .ended-mode video,
+html:not([data-player-size="fullscreen"]) div#player-api .ended-mode html5-video-content {
     /* video is hidden at the end, so do not force size anymore */
     min-height: unset !important;
     min-width: unset !important;
+    top: -10000px !important; /* hide video in the end (needed, because
+                                 we override top in the first definition) */
 }
