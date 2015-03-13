@@ -16,7 +16,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
         // create the html5 button
         html5Button = document.createElement("button");
         html5Button.className = "yt-uix-button yt-uix-button-default yt-uix-button-size-default yt-uix-button-empty yt-uix-tooltip";
-        html5Button.dataset.tooltipText = "YouTube ALL HTML5";
+        html5Button.dataset.tooltipText = "YouTube ALL HTML5 - " + options.version;
         html5Button.style.backgroundImage = "url(" + options.buttonImageUrl + ")";
         html5Button.style.backgroundRepeat = "no-repeat";
         html5Button.style.backgroundPosition = "5px 50%";
