@@ -189,15 +189,21 @@ function youtubeHtml5ButtonLoader(startOptions) {
         var sidebar = document.getElementById("watch7-sidebar");
         if(sidebar) {
             sidebar.style.transition = "none";
-            sidebar.style.marginTop = "10px";
+            sidebar.style.marginTop = "0";
             sidebar.style.top = "0";
+        }
+
+        var placeholderPlayer = document.getElementById("placeholder-player");
+        if(placeholderPlayer) {
+            placeholderPlayer.style.display = "none";
         }
 
         player.style.width = (height * 16 / 9) + "px";
         player.style.marginBottom = "10px";
         player.style.maxWidth = "none";
-        playerApi.style.cssFloat = "none";
+        playerApi.style.position = "relative";
         playerApi.style.margin = "auto";
+        playerApi.style.left = "auto";
         playerApi.style.width = (height * 16 / 9) + "px";
         playerApi.style.height = (height + 30) + "px"; // 30px for nav
     }
