@@ -164,7 +164,7 @@ function youtubeHtml5ButtonLoader(startOptions) {
 
         height = parseInt(height);
 
-        if(height == 0 || !playerApi || !player) return;
+        if(height == 0 || height == -2 || !playerApi || !player) return;
 
         // this differs between youtube designs, known: 225px, 0px (new)
         var leftPadding = parseInt(window.getComputedStyle(player).

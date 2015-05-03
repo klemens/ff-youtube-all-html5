@@ -37,6 +37,9 @@
       }, {
           "label": "2560x1440 (1440p)",
           "value": "1440"
+      }, {
+          "label": "Use theater mode",
+          "value": "-2"
       }]
   }, {
       "name": "yt-video-resolution",
