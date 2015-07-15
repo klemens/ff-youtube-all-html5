@@ -193,6 +193,13 @@ function youtubeHtml5ButtonLoader(startOptions) {
             sidebar.style.top = "0";
         }
 
+        // Fix playlist position
+        var playlist = document.getElementById("watch-appbar-playlist");
+        if(playlist) {
+            playlist.style.setProperty("margin-left", "0", "important");
+            playlist.style.marginTop = "10px";
+        }
+
         var placeholderPlayer = document.getElementById("placeholder-player");
         if(placeholderPlayer) {
             placeholderPlayer.style.display = "none";
