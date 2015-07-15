@@ -213,6 +213,24 @@ function youtubeHtml5ButtonLoader(startOptions) {
         playerApi.style.left = "auto";
         playerApi.style.width = (height * 16 / 9) + "px";
         playerApi.style.height = (height + 30) + "px"; // 30px for nav
+
+        // fixes for the new player design
+        var chromeBottom = document.querySelector(".ytp-chrome-bottom");
+        if(chromeBottom) {
+            // new desing uses floating controls, so remove extra 30 px
+            playerApi.style.height = height + "px";
+
+            var videoContainer = playerApi.querySelector(".html5-video-container");
+            if(videoContainer) {
+                videoContainer.style.width = "100%";
+                videoContainer.style.height = "100%";
+            }
+
+            var sidebarSpacer = document.getElementById("watch-sidebar-spacer");
+            if(sidebarSpacer) {
+                sidebarSpacer.style.display = "none";
+            }
+        }
     }
 
     function insertVideoIframe(video, insertInto) {
