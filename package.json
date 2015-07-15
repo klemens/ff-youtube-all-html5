@@ -96,12 +96,18 @@
   }, {
       "name": "yt-loadtype",
       "title": "YouTube video loading method",
-      "description": "Note: The button always uses the API method on first click and the embedding method on second click.",
+      "description": "Note: \"Force HTML5-Test\" should even work with Flash installed and enabled.",
       "type": "radio",
       "value": "ie",
       "options": [{
+          "value": "html5-test",
+          "label": "Force HTML5-Test (default)"
+      }, {
           "value": "ie",
-          "label": "Emulate Internet Explorer (default)"
+          "label": "Emulate Internet Explorer"
+      }, {
+          "value": "none",
+          "label": "Disable (for Firefox without Flash installed)"
       }]
   }]
 }
