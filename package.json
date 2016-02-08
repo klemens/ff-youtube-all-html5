@@ -4,7 +4,6 @@
   "id": "jid1-qj0w91o64N7Eeg@jetpack",
   "description": "Play all videos on youtube without flash.",
   "author": "Klemens Schölhorn",
-  "icon": "logo/logo32.png",
   "main" : "lib/main.js",
   "permissions": { "private-browsing": true,
                    "unsafe-content-script": true },
