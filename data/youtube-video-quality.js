@@ -4,11 +4,19 @@ var _ytallhtml5 = createObjectIn(unsafeWindow, {defineAs: "_ytallhtml5"});
 // Make config options available
 _ytallhtml5.options = cloneInto(self.options, unsafeWindow);
 
+runInPageContext(() => {
+    // We only need to fix the video and controls sizes if we are changing the player size
+    var height = parseInt(_ytallhtml5.options.settings["yt-player-height"]);
+    if(height == 0 || height == -2) return;
 
-/**
- * Hijack the youtube config variable so we can modify it instanly upon setting
- */
-runInPageContext(function(params) {
+    // Deleting the matchMedia method prevents the player from querying the
+    // page size, which makes if fall back to the size the page (or add-ons
+    // like us) specified for the containing div
+    delete window.matchMedia;
+});
+
+runInPageContext(() => {
+    // Hijack the youtube config variable so we can modify it instanly upon setting
     window.ytplayer = {};
     Object.defineProperty(window.ytplayer, "config", {
         get: function() {
@@ -32,7 +40,7 @@ runInPageContext(function(params) {
             window._ytallhtml5.config = config;
         }
     });
-}, {});
+});
 
 // This is called when the youtube player has finished loading
 // and its API can be used safely
