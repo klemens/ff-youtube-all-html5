@@ -32,20 +32,26 @@ function youtubeHtml5ButtonLoader(startOptions) {
         menuList.className = "yt-uix-button-menu hid";
         html5Button.appendChild(menuList);
 
-        // Insert values into the list
-        for(var i in options.playerHeights) {
-            var li = document.createElement("li");
-            menuList.appendChild(li);
+        // only add the manual size controls to the menu when we are also
+        // resizing the player automatically, because they depend on deleting
+        // the window.matchMedia function before the player is even loaded
+        // (see the video quality content script for details)
+        var height = parseInt(options.settings["yt-player-height"]);
+        if(height > 0 || height == -1) {
+            for(var i in options.playerHeights) {
+                var li = document.createElement("li");
+                menuList.appendChild(li);
 
-            var span = document.createElement("span");
-            span.className = "yt-uix-button-menu-item";
-            span.style.padding = "0 1em";
-            span.textContent = "Resize to " + options.playerHeights[i] + "p";
-            span.dataset.playersize = options.playerHeights[i];
-            span.addEventListener("click", function(event) {
-                resizePlayer(event.target.dataset.playersize);
-            });
-            li.appendChild(span);
+                var span = document.createElement("span");
+                span.className = "yt-uix-button-menu-item";
+                span.style.padding = "0 1em";
+                span.textContent = "Resize to " + options.playerHeights[i] + "p";
+                span.dataset.playersize = options.playerHeights[i];
+                span.addEventListener("click", function(event) {
+                    resizePlayer(event.target.dataset.playersize);
+                });
+                li.appendChild(span);
+            }
         }
 
         // add force playback link
