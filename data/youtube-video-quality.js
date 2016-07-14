@@ -35,6 +35,7 @@ runInPageContext(() => {
                 config.args.video_container_override = resolution;
                 // suggestedQuality may not work anymore
                 config.args.suggestedQuality = _ytallhtml5.resolutionToYTQuality(resolution);
+                config.args.vq = _ytallhtml5.resolutionToYTQuality(resolution);
             }
 
             window._ytallhtml5.config = config;
@@ -46,6 +47,9 @@ runInPageContext(() => {
 // and its API can be used safely
 window.wrappedJSObject.onYouTubePlayerReady = function() {
     var player = document.querySelector("#movie_player").wrappedJSObject;
+
+    // set the quality directly, because the config is ignored sometimes
+    player.setPlaybackQuality(_ytallhtml5.config.args.vq);
 
     // set volume to 100% to work aroung a youtube bug which reduces
     // the volume without user interaction
@@ -131,11 +135,14 @@ exportFunction(function(playerHeight) { // findBestResolution
  */
 exportFunction(function(resolution) { // resolutionToYTQuality
     switch(resolution) {
+        case "256x144": return "light";
+        case "426x240": return "small";
         case "640x360": return "medium";
         case "853x480": return "large";
         case "1280x720": return "hd720";
         case "1920x1080": return "hd1080";
-        case "2560x1440": return "highres";
+        case "2560x1440": return "hd1440";
+        case "3840x2160": return "hd2160";
         default: return "auto";
     }
 }, _ytallhtml5, {defineAs: "resolutionToYTQuality"});

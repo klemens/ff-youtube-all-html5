@@ -50,6 +50,12 @@
           "label": "Auto",
           "value": "auto"
       }, {
+          "label": "144p",
+          "value": "256x144"
+      }, {
+          "label": "240p",
+          "value": "426x240"
+      }, {
           "label": "360p",
           "value": "640x360"
       }, {
