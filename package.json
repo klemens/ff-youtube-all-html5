@@ -93,6 +93,12 @@
       "type": "bool",
       "value": false
   }, {
+      "name": "yt-hide-annotations",
+      "title": "Hide video annotations",
+      "description": "This hides all text and link annotations (experimental)",
+      "type": "bool",
+      "value": false
+  }, {
       "name": "yt-loadtype",
       "title": "YouTube video loading method",
       "type": "radio",
