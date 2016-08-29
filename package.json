@@ -106,6 +106,12 @@
       "type": "bool",
       "value": false
   }, {
+      "name": "yt-enable-context-menu",
+      "title": "Enable opening videos without their playlists",
+      "description": "Adds a context menu entry that lets you open a video link which contains a playlist without the playlist.",
+      "type": "bool",
+      "value": true
+  }, {
       "name": "yt-loadtype",
       "title": "YouTube video loading method",
       "type": "radio",
