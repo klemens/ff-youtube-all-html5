@@ -57,7 +57,13 @@ window.wrappedJSObject.onYouTubePlayerReady = function() {
         player.setVolume(100);
     }
 
-    if("none" !== self.options.settings["yt-start-option"]) {
+    var startOption = self.options.settings["yt-start-option"];
+    if("none" !== startOption) {
+        if("paused-if-hidden" === startOption && !document.hidden) {
+            // video is visible, so do not pause in this mode
+            return;
+        }
+
         var pauseVideo = function() {
             player.pauseVideo();
         }

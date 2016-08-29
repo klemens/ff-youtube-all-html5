@@ -103,6 +103,9 @@
           "label": "Never",
           "value": "none"
       }, {
+          "label": "Only in background tabs",
+          "value": "paused-if-hidden"
+      }, {
           "label": "Always",
           "value": "paused"
       }]
