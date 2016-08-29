@@ -57,7 +57,7 @@ window.wrappedJSObject.onYouTubePlayerReady = function() {
         player.setVolume(100);
     }
 
-    if(self.options.settings["yt-start-paused"]) {
+    if("none" !== self.options.settings["yt-start-option"]) {
         var pauseVideo = function() {
             player.pauseVideo();
         }

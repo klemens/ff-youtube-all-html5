@@ -94,11 +94,18 @@
       "type": "bool",
       "value": false
   }, {
-      "name": "yt-start-paused",
-      "title": "Start videos paused on YouTube",
+      "name": "yt-start-option",
+      "title": "Start videos paused",
       "description": "This pauses videos when they are loaded",
-      "type": "bool",
-      "value": false
+      "type": "menulist",
+      "value": "none",
+      "options" : [{
+          "label": "Never",
+          "value": "none"
+      }, {
+          "label": "Always",
+          "value": "paused"
+      }]
   }, {
       "name": "yt-hide-annotations",
       "title": "Hide video annotations",
