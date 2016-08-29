@@ -6,7 +6,8 @@
   "author": "Klemens Schölhorn",
   "main" : "lib/main.js",
   "permissions": { "private-browsing": true,
-                   "unsafe-content-script": true },
+                   "unsafe-content-script": true,
+                   "multiprocess": true },
   "license": "GPLv3",
   "version": "3.1.0beta1",
   "preferences": [{
