@@ -63,6 +63,11 @@ window.wrappedJSObject.onYouTubePlayerReady = function() {
             // video is visible, so do not pause in this mode
             return;
         }
+        var queryParameters = _ytallhtml5.parseUrlQuery(document.location.search);
+        if("paused-if-not-playlist" === startOption && ("list" in queryParameters)) {
+            // we are watching a playlist, so do not pause in this mode
+            return;
+        }
 
         var pauseVideo = function() {
             player.pauseVideo();
@@ -152,6 +157,19 @@ exportFunction(function(resolution) { // resolutionToYTQuality
         default: return "auto";
     }
 }, _ytallhtml5, {defineAs: "resolutionToYTQuality"});
+
+/**
+ * Parse the query part of a url into a map
+ * @see: http://www.techtricky.com/how-to-get-url-parameters-using-javascript/
+ */
+exportFunction(function(query) {
+    var params = {};
+    query.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) {
+        params[key] = value;
+    });
+    return params;
+}, _ytallhtml5, {defineAs: "parseUrlQuery"});
+
 
 /**
  * This is needed because since firefox 33 it is no longer allowed for

@@ -106,6 +106,9 @@
           "label": "Only in background tabs",
           "value": "paused-if-hidden"
       }, {
+          "label": "Only when not watching a playlist",
+          "value": "paused-if-not-playlist"
+      }, {
           "label": "Always",
           "value": "paused"
       }]
