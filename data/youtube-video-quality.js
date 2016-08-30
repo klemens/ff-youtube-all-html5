@@ -43,6 +43,9 @@ runInPageContext(() => {
     });
 });
 
+// Apply the selected start options to the video, like start paused
+applyStartOptions(self.options.settings["yt-start-option"]);
+
 // This is called when the youtube player has finished loading
 // and its API can be used safely
 window.wrappedJSObject.onYouTubePlayerReady = function() {
@@ -55,34 +58,6 @@ window.wrappedJSObject.onYouTubePlayerReady = function() {
     // the volume without user interaction
     if(self.options.settings["yt-fix-volume"]) {
         player.setVolume(100);
-    }
-
-    var startOption = self.options.settings["yt-start-option"];
-    if("none" !== startOption) {
-        if("paused-if-hidden" === startOption && !document.hidden) {
-            // video is visible, so do not pause in this mode
-            return;
-        }
-        var queryParameters = _ytallhtml5.parseUrlQuery(document.location.search);
-        if("paused-if-not-playlist" === startOption && ("list" in queryParameters)) {
-            // we are watching a playlist, so do not pause in this mode
-            return;
-        }
-
-        var pauseVideo = function() {
-            player.pauseVideo();
-        }
-        // sometimes the first call does not work, so we pause a second time
-        pauseVideo();
-        window.setTimeout(pauseVideo, 100);
-
-        var fixTitle = function() {
-            window.document.title = window.document.title.replace("▶ ", "");
-        }
-        // youtube changes the title after this function is called, so we simply guess;
-        // more than 1s is problematic because the user might start the video manually before
-        window.setTimeout(fixTitle, 300);
-        window.setTimeout(fixTitle, 1000);
     }
 }
 
@@ -159,16 +134,39 @@ exportFunction(function(resolution) { // resolutionToYTQuality
 }, _ytallhtml5, {defineAs: "resolutionToYTQuality"});
 
 /**
+ * Set up listeners to apply the video start options (eg paused).
+ */
+function applyStartOptions(startOption) {
+    if("none" !== startOption) {
+        if("paused-if-hidden" === startOption && !document.hidden) {
+            // video is visible, so do not pause in this mode
+            return;
+        }
+        var queryParameters = parseUrlQuery(document.location.search);
+        if("paused-if-not-playlist" === startOption && ("list" in queryParameters)) {
+            // we are watching a playlist, so do not pause in this mode
+            return;
+        }
+
+        var listener = function(event) {
+            document.documentElement.removeEventListener("playing", listener, true);
+            event.target.pause();
+        };
+        document.documentElement.addEventListener("playing", listener, true);
+    }
+}
+
+/**
  * Parse the query part of a url into a map
  * @see: http://www.techtricky.com/how-to-get-url-parameters-using-javascript/
  */
-exportFunction(function(query) {
+function parseUrlQuery(query) {
     var params = {};
     query.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) {
         params[key] = value;
     });
     return params;
-}, _ytallhtml5, {defineAs: "parseUrlQuery"});
+}
 
 
 /**
