@@ -113,6 +113,31 @@
           "value": "paused"
       }]
   }, {
+      "name": "yt-video-playback-rate",
+      "title": "Video playback rate",
+      "description": "Set playback rate on start of the video (experimental)",
+      "type": "menulist",
+      "value": "1.0",
+      "options" : [{
+          "label": "Slower (0.25x)",
+          "value": "0.25"
+      }, {
+          "label": "Slow (0.5x)",
+          "value": "0.5"
+      }, {
+          "label": "Default (do not change)",
+          "value": "1.0"
+      }, {
+          "label": "Fast (1.25x)",
+          "value": "1.25"
+      }, {
+          "label": "Faster (1.5x)",
+          "value": "1.5"
+      }, {
+          "label": "Ludicrous (2x)",
+          "value": "2.0"
+      }]
+  }, {
       "name": "yt-hide-annotations",
       "title": "Hide video annotations",
       "description": "This hides all text and link annotations (experimental)",

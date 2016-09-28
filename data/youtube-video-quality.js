@@ -59,6 +59,12 @@ window.wrappedJSObject.onYouTubePlayerReady = function() {
     if(self.options.settings["yt-fix-volume"]) {
         player.setVolume(100);
     }
+
+    // set the playback rate of the video if requested
+    var playbackRate = parseFloat(self.options.settings["yt-video-playback-rate"]);
+    if(playbackRate !== 1) {
+        player.setPlaybackRate(playbackRate);
+    }
 }
 
 
