@@ -61,39 +61,6 @@ window.wrappedJSObject.onYouTubePlayerReady = function() {
     }
 }
 
-// register function to let the main script register inserted iframes
-document.documentElement.addEventListener("registerIframe", function(event) {
-    var iframe = document.getElementById(event.detail.id);
-
-    var handleIframe = function() {
-        var player = iframe.contentDocument.getElementById('player1');
-        if(player && player.wrappedJSObject.setVolume && !handleIframe.runOnce) {
-            // set volume to 100% to work aroung a youtube bug which reduces
-            // the volume without user interaction
-            if(self.options.settings["yt-fix-volume"]) {
-                player.wrappedJSObject.setVolume(100);
-            }
-
-            // listen for video end and inform listeners
-            player.wrappedJSObject.addEventListener("onStateChange", function(state) {
-                if(0 == state) {
-                    var event = document.createEvent('CustomEvent');
-                    event.initCustomEvent("iframeStopped", true, true, null);
-                    document.documentElement.dispatchEvent(event);
-                }
-            });
-
-            // ensure that only one event handler (above) is attached
-            handleIframe.runOnce = true;
-            iframe.contentDocument.removeEventListener("timeupdate", handleIframe, true);
-        }
-    };
-
-    iframe.addEventListener("load", function() {
-        iframe.contentDocument.addEventListener("timeupdate", handleIframe, true);
-    });
-}, false);
-
 
 /**
  * Function that returns the 16:9 video resolution for a given player height.

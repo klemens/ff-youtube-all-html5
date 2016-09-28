@@ -265,20 +265,6 @@ function youtubeHtml5ButtonLoader(startOptions) {
             insertInto.removeChild(insertInto.firstChild);
         }
         insertInto.appendChild(player);
-
-        // handle iframe to video quality script
-        dispatchEvent("registerIframe", { id: player.id });
-
-        // listen for iframe video end and proceed to next video on playlist sites
-        var autoplayButton = document.querySelector(".toggle-autoplay");
-        var nextVideoButton = document.querySelector(".next-playlist-list-item");
-        if(that.isPlaylistSite()) {
-            document.documentElement.addEventListener("iframeStopped", function(event) {
-                if(autoplayButton.classList.contains("yt-uix-button-toggled")) {
-                    nextVideoButton.click();
-                }
-            });
-        }
     }
 
     // http://www.techtricky.com/how-to-get-url-parameters-using-javascript/
@@ -288,12 +274,6 @@ function youtubeHtml5ButtonLoader(startOptions) {
             params[key] = value;
         });
         return params;
-    }
-
-    function dispatchEvent(type, detail) {
-        var event = document.createEvent('CustomEvent');
-        event.initCustomEvent(type, true, true, detail);
-        document.documentElement.dispatchEvent(event);
     }
 }
 
