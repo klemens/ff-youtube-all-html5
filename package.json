@@ -2,7 +2,7 @@
   "name": "youtube-all-html5",
   "title": "YouTube ALL HTML5",
   "id": "jid1-qj0w91o64N7Eeg@jetpack",
-  "description": "Play all videos on youtube without flash.",
+  "description": "Play all videos on YouTube with your preferred settings (size, quality, playback rate, …) without cookies using only HTML5.",
   "author": "Klemens Schölhorn",
   "main" : "lib/main.js",
   "permissions": { "private-browsing": true,
