@@ -88,12 +88,6 @@
       "type": "bool",
       "value": false
   }, {
-      "name": "yt-fix-volume",
-      "title": "Fix volume bug on YouTube",
-      "description": "This sets the volume to 100% on start of the video.",
-      "type": "bool",
-      "value": false
-  }, {
       "name": "yt-start-option",
       "title": "Start videos paused",
       "description": "This pauses videos when they are loaded",
@@ -136,6 +130,37 @@
       }, {
           "label": "Ludicrous (2x)",
           "value": "2.0"
+      }]
+  }, {
+      "name": "yt-video-volume",
+      "title": "Video volume",
+      "description": "Set volume on start of the video (experimental)",
+      "type": "menulist",
+      "value": -1,
+      "options" : [{
+          "label": "Default (do not change)",
+          "value": "-1"
+      }, {
+          "label": "0 % (Muted)",
+          "value": "0"
+      }, {
+          "label": "5 %",
+          "value": "5"
+      }, {
+          "label": "12 %",
+          "value": "12"
+      }, {
+          "label": "25 %",
+          "value": "25"
+      }, {
+          "label": "50 %",
+          "value": "50"
+      }, {
+          "label": "75 %",
+          "value": "75"
+      }, {
+          "label": "100 %",
+          "value": "100"
       }]
   }, {
       "name": "yt-disable-autoplay",

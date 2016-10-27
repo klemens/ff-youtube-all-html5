@@ -54,10 +54,10 @@ window.wrappedJSObject.onYouTubePlayerReady = function() {
     // set the quality directly, because the config is ignored sometimes
     player.setPlaybackQuality(_ytallhtml5.config.args.vq);
 
-    // set volume to 100% to work aroung a youtube bug which reduces
-    // the volume without user interaction
-    if(self.options.settings["yt-fix-volume"]) {
-        player.setVolume(100);
+    // set the volume of the video if requested
+    var volume = self.options.settings["yt-video-volume"];
+    if(volume !== -1) {
+        player.setVolume(volume);
     }
 
     // set the playback rate of the video if requested
