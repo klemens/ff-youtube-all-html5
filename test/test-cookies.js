@@ -25,4 +25,22 @@ exports.testCookieParsing = (assert) => {
     assert.equal(t("a=1; abc; b=2"), "a=1; b=2");
 };
 
+exports.testModifyPref = (assert) => {
+    var t = (testcase, key, value) => {
+        var cookies = new Cookies(testcase);
+        modifyPrefCookie(cookies, key, value);
+        return cookies.unparse();
+    };
+
+    var t1 = "PREF=f1=abc&f2=999";
+    assert.equal(t(t1, "f1", "1234"), "PREF=f1=1234&f2=999");
+    assert.equal(t(t1, "f2", "abcd"), "PREF=f1=abc&f2=abcd");
+    assert.equal(t(t1, "f3", "123"), "PREF=f1=abc&f2=999&f3=123");
+    assert.equal(t(t1, "f1", ""), "PREF=f1=&f2=999");
+    assert.equal(t(t1, "f2", ""), "PREF=f1=abc&f2=");
+
+    assert.equal(t("PREF=", "f2", "1"), "PREF=f2=1");
+    assert.equal(t("", "f2", "1"), "PREF=f2=1");
+};
+
 require('sdk/test').run(exports);
