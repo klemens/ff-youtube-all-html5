@@ -138,6 +138,12 @@
           "value": "2.0"
       }]
   }, {
+      "name": "yt-disable-autoplay",
+      "title": "Prevent autoplay of recommended videos",
+      "description": "This is equivalent to the button in the recommended column (experimental)",
+      "type": "bool",
+      "value": false
+  }, {
       "name": "yt-hide-annotations",
       "title": "Hide video annotations",
       "description": "This hides all text and link annotations (experimental)",
