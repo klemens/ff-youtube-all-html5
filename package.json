@@ -76,12 +76,6 @@
           "value": "3840x2160"
       }]
   }, {
-      "name": "yt-disable-spf",
-      "title": "Disable YouTube SPF",
-      "description": "SPF loads pages through JavaScript, which causes some problems for this add-on",
-      "type": "bool",
-      "value": true
-  }, {
       "name": "yt-disable-flash",
       "title": "Disable Flash on YouTube",
       "description": "If you want to keep Flash enabled but use HTML5 on YouTube (and embedded videos).",
@@ -195,5 +189,11 @@
           "value": "ie-legacy",
           "label": "Emulate Internet Explorer (not recommended)"
       }]
+  }, {
+      "name": "yt-disable-spf",
+      "title": "Disable YouTube SPF",
+      "description": "Most features of this add-on only work correctly when SPF is disabled",
+      "type": "bool",
+      "value": true
   }]
 }
