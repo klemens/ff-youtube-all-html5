@@ -46,6 +46,25 @@ runInPageContext(() => {
 // Apply the selected start options to the video, like start paused
 applyStartOptions(self.options.settings["yt-start-option"]);
 
+// Disable autoplay by updating the local cookies, which is necessary if
+// youtube ever writes this pref, because the local value overwrites the
+// value sent to the server (which is also modified) in this case
+if(self.options.settings["yt-disable-autoplay"]) {
+    // extract PREF cookie (https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie)
+    let pref = document.cookie.replace(/(?:(?:^|.*;\s*)PREF\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    if(pref) {
+        let pattern = /f5=[^&]+/;
+        if(-1 == pref.search(pattern)) {
+            pref += "&f5=30030";
+        } else {
+            pref = pref.replace(pattern, "f5=30030");
+        }
+        // The domain is the same that is used by youtube to ensure that the
+        // cookie is overwritten instead of just added alongside
+        document.cookie = "PREF=" + pref + "; domain=.youtube.com";
+    }
+}
+
 // This is called when the youtube player has finished loading
 // and its API can be used safely
 window.wrappedJSObject.onYouTubePlayerReady = function() {
