@@ -10,6 +10,10 @@
                    "multiprocess": true },
   "license": "GPLv3",
   "version": "3.1.1-rc1",
+  "engines": {
+      "firefox": ">=38.0a1",
+      "{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4}": ">=27.1.0b1"
+   },
   "preferences": [{
       "name": "yt-player-height",
       "title": "YouTube player size",
