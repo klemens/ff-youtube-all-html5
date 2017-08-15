@@ -234,12 +234,6 @@ function youtubeHtml5ButtonLoader(startOptions) {
             // new desing uses floating controls, so remove extra 30 px
             playerApi.style.height = height + "px";
 
-            var videoContainer = playerApi.querySelector(".html5-video-container");
-            if(videoContainer) {
-                videoContainer.style.width = "100%";
-                videoContainer.style.height = "100%";
-            }
-
             var sidebarSpacer = document.getElementById("watch-sidebar-spacer");
             if(sidebarSpacer) {
                 sidebarSpacer.style.display = "none";
