@@ -82,6 +82,11 @@ if(self.options.settings["yt-disable-autoplay"]) {
     }
 }
 
+// Manage theater mode (setting local cookie like above)
+if(-2 == self.options.settings["yt-player-height"]) {
+    document.cookie = "wide=1; domain=.youtube.com";
+}
+
 // This is called when the youtube player has finished loading
 // and its API can be used safely
 window.wrappedJSObject.onYouTubePlayerReady = function() {
