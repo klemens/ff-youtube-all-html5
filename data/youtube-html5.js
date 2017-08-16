@@ -292,7 +292,7 @@ if(!isPolymer() && youtubeHtml5Button.isVideoSite()) {
 }
 
 // check if spf is enabled
-if(window.wrappedJSObject.ytspf && window.wrappedJSObject.ytspf.enabled) {
+if(!isPolymer() && window.wrappedJSObject.ytspf && window.wrappedJSObject.ytspf.enabled) {
     if(self.options.settings["yt-disable-spf"]) {
         // disbale spf by disposing the spf object
         // inspired by YePpHa's YouTubeCenter (https://github.com/YePpHa/YouTubeCenter)
