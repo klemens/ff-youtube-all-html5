@@ -85,10 +85,12 @@ if(self.options.settings["yt-disable-autoplay"]) {
 // This is called when the youtube player has finished loading
 // and its API can be used safely
 window.wrappedJSObject.onYouTubePlayerReady = function() {
-    var player = document.querySelector("#movie_player").wrappedJSObject;
+    var player = document.querySelector("#movie_player");
+    if(!player) {
+        return;
+    }
 
-    // set the quality directly, because the config is ignored sometimes
-    player.setPlaybackQuality(_ytallhtml5.config.args.vq);
+    player = player.wrappedJSObject;
 
     // set the volume of the video if requested
     var volume = self.options.settings["yt-video-volume"];
