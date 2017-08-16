@@ -9,10 +9,23 @@ runInPageContext(() => {
     var height = parseInt(_ytallhtml5.options.settings["yt-player-height"]);
     if(height == 0 || height == -2) return;
 
-    // Deleting the matchMedia method prevents the player from querying the
-    // page size, which makes if fall back to the size the page (or add-ons
-    // like us) specified for the containing div
+    // Deleting the matchMedia method prevents the player in the old design
+    // from querying the page size, which makes if fall back to the size the
+    // page (or add-ons like us) specified for the containing div.
+    // This does not work for the new polymer design, so we have to adjust
+    // dynamically (returning undefined while polymer is still loading seems
+    // unproblematic).
+    window._matchMedia = window.matchMedia;
     delete window.matchMedia;
+    Object.defineProperty(window, "matchMedia", {
+        get: function() {
+            if(document.getElementById("polymer-app") !== null) {
+                return window._matchMedia;
+            } else {
+                return undefined;
+            }
+        }
+    });
 });
 
 runInPageContext(() => {
