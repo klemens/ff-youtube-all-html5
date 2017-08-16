@@ -271,6 +271,10 @@ function youtubeHtml5ButtonLoader(startOptions) {
     }
 }
 
+function isPolymer() {
+    return document.getElementById("polymer-app") !== null;
+}
+
 var youtubeHtml5Button = new youtubeHtml5ButtonLoader(self.options);
 
 // remove flash plugin from the supported plugin list
@@ -281,7 +285,7 @@ if(!(window.wrappedJSObject.ytplayer && window.wrappedJSObject.ytplayer.config &
 }
 
 // install button if we are on a video site
-if(youtubeHtml5Button.isVideoSite()) {
+if(!isPolymer() && youtubeHtml5Button.isVideoSite()) {
     youtubeHtml5Button.installButton();
     youtubeHtml5Button.autoSizeVideo();
     youtubeHtml5Button.autoHideAnnotations();
@@ -301,7 +305,7 @@ if(window.wrappedJSObject.ytspf && window.wrappedJSObject.ytspf.enabled) {
             mutations.forEach(function(mutation) {
                 for(var i = 0; i < mutation.removedNodes.length; ++i) {
                     if(mutation.removedNodes[i].id && mutation.removedNodes[i].id == "progress") {
-                        if(youtubeHtml5Button.isVideoSite()) {
+                        if(!isPolymer() && youtubeHtml5Button.isVideoSite()) {
                             youtubeHtml5Button.showButton();
                             youtubeHtml5Button.autoSizeVideo();
                             youtubeHtml5Button.autoHideAnnotations();
