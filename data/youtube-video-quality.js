@@ -30,12 +30,10 @@ runInPageContext(() => {
 
 runInPageContext(() => {
     // Hijack the youtube config variable so we can modify it instanly upon setting
-    window.ytplayer = {};
-    Object.defineProperty(window.ytplayer, "config", {
+    delete window.ytplayer;
+    window._ytplayer = {};
+    Object.defineProperty(window, "ytplayer", {
         get: function() {
-            return window._ytallhtml5.config;
-        },
-        set: function(config) {
             var resolution = null;
             if(_ytallhtml5.options.settings["yt-video-resolution"] === "auto") {
                 if(_ytallhtml5.options.settings["yt-player-height"] !== 0) {
@@ -45,13 +43,19 @@ runInPageContext(() => {
                 resolution = _ytallhtml5.options.settings["yt-video-resolution"];
             }
             if(resolution) {
-                config.args.video_container_override = resolution;
+                _ytplayer.config = _ytplayer.config || {};
+                _ytplayer.config.args = _ytplayer.config.args || {};
+
+                _ytplayer.config.args.video_container_override = resolution;
                 // suggestedQuality may not work anymore
-                config.args.suggestedQuality = _ytallhtml5.resolutionToYTQuality(resolution);
-                config.args.vq = _ytallhtml5.resolutionToYTQuality(resolution);
+                _ytplayer.config.args.suggestedQuality = _ytallhtml5.resolutionToYTQuality(resolution);
+                _ytplayer.config.args.vq = _ytallhtml5.resolutionToYTQuality(resolution);
             }
 
-            window._ytallhtml5.config = config;
+            return window._ytplayer;
+        },
+        set: function(value) {
+            window._ytplayer = value;
         }
     });
 });
